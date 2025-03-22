@@ -1,11 +1,12 @@
 from flask import Flask, request, Blueprint, jsonify, make_response, render_template
-from ..model import transcription
+from ..model.transcription import Transcriber
 from ..model.feedback import Gemini
 import io
 
 # Create blueprint for endpoints
 bp = Blueprint("feedback", __name__)
 feedback_model = Gemini()
+transcribe_model = Transcriber()
 
 @bp.route("/", methods=["POST"])
 def feedback():
@@ -20,8 +21,8 @@ def feedback():
     try:
         # read the bytes into an opus
         buffer = io.BytesIO(audio.read())
-        buffer.name = "file.opus"  # this is the important line
-        transcribed = transcription(audio) # issue is here
+        buffer.name = "file.mp3"  # this is the important line
+        transcribed = transcribe_model.transcription(buffer) # issue is here
         print(transcribed)
     except Exception as e:
         print("error:", e)

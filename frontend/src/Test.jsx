@@ -29,7 +29,7 @@ function Test() {
 
   async function startRecording() {
     recordedChunks = [];
-    // var options = { mimeType: "video/webm;codecs=vp9,opus" };
+    // var options = { mimeType: "audio/webm;codecs=opus" };
     // console.log(navigator.mediaDevices.getUserMedia(constraints));
     await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
       try {
@@ -52,7 +52,7 @@ function Test() {
       console.log("Recorded Blobs: ", recordedChunks);
       // set audio playback
       const superBuffer = new Blob(recordedChunks, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/Ogg;codecs=opus",
       });
       setPlay(superBuffer);
     };
@@ -62,7 +62,6 @@ function Test() {
   }
 
   function stopRecording() {
-    // console.log("i am in stop");
     mediaRecorder.stop();
     console.log("MediaRecorder stopped", mediaRecorder.state);
   }
@@ -70,24 +69,16 @@ function Test() {
   // will make request to flask backend
   function handleAnalyze() {
     const audioBlob = new Blob(recordedChunks, {
-      type: "audio/ogg; codecs=opus",
+      type: "audio/Ogg;codecs=opus",
     });
 
     // upload form data
     var data = new FormData();
     data.append("file", audioBlob, "file");
-    // console.log(data["file"]);
-    // const contents = {
-    //   feedback: "testing",
-    // };
 
     const URL = `${BACKEND_URL}/feedback/`;
     fetch(URL, {
       method: "POST",
-      headers: {
-        // "Content-Type": "audio/ogg",
-        // "Access-Control-Allow-Origin": "*",
-      },
       body: data,
     })
       .then((response) => {
@@ -96,21 +87,6 @@ function Test() {
       .then((data) => {
         setFeedback(data.feedback);
       });
-    // fetch(URL, {
-    //   method: "GET",
-    //   credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": "*",
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.ok) return response.json();
-    //   })
-    //   .then((data) => {
-    //     setFeedback(data.data);
-    //   });
   }
 
   return (

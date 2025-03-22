@@ -1,2 +1,2 @@
-from .transcription import transcription
+from .transcription import Transcriber
 from .feedback import Gemini

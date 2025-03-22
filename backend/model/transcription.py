@@ -1,6 +1,6 @@
 from faster_whisper import WhisperModel
 
-class transcriber():
+class Transcriber():
     def __init__(self):
         self.model = WhisperModel("medium", device="cpu", compute_type="int8")
 
@@ -12,7 +12,7 @@ class transcriber():
 
 
 if __name__=="__main__":
-    transcriber_model = transcriber()
+    transcriber_model = Transcriber()
 
     segments = transcriber_model.transcription(audio_path=r"testing\test.mp3")
 
