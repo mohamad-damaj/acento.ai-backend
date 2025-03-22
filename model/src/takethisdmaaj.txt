@@ -1,7 +1,0 @@
-import dotenv
-import os
-
-dotenv.load_dotenv()
-
-# to get the key do
-# os.environ.get("GEMINI_API_KEY")

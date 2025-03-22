@@ -1,9 +1,11 @@
 import whisper
 
-def transcription(audio_path): #audio must be .wav
+def transcription(audio_path): 
     model = whisper.load_model("base")
 
     result = model.transcribe(audio_path)
+
+    return result
 
 
 
