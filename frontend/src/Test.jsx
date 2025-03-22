@@ -52,7 +52,7 @@ function Test() {
       console.log("Recorded Blobs: ", recordedChunks);
       // set audio playback
       const superBuffer = new Blob(recordedChunks, {
-        type: "audio/Ogg;codecs=opus",
+        type: "audio/ogg;codecs=opus",
       });
       setPlay(superBuffer);
     };
@@ -69,7 +69,7 @@ function Test() {
   // will make request to flask backend
   function handleAnalyze() {
     const audioBlob = new Blob(recordedChunks, {
-      type: "audio/Ogg;codecs=opus",
+      type: "audio/ogg;codecs=opus",
     });
 
     // upload form data
