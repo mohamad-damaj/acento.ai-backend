@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 class Gemini:
     def __init__(self):
 
-        load_dotenv()
+        dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+        load_dotenv(dotenv_path)
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
         self.model = genai.GenerativeModel("gemini-2.0-flash")
 

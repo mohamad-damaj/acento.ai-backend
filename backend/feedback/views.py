@@ -15,30 +15,26 @@ def feedback():
     else:
         response = make_response(jsonify("failed to receive file"))
         return response, 400 
-    
-    print(audio.read())
+    audio.save("./file.ogg")
     # remember to error handle!
     try:
-        # read the bytes into an opus
-        buffer = io.BytesIO(audio.read())
-        buffer.name = "file.mp3"  # this is the important line
-        transcribed = transcribe_model.transcription(buffer) # issue is here
-        print(transcribed)
+        transcription = transcribe_model.transcription("./file.ogg") # issue is here
     except Exception as e:
         print("error:", e)
         response = make_response(jsonify("failed to load audio"))
         return response, 400
 
-    # audio_text = " ".join([segment.text for segment in transcription])
-    # feedback = feedback_model.query_gemini_feedback("hey this is a test", "formal", 150)
-    # print(feedback)
+    try: 
+        audio_text = " ".join([segment.text for segment in transcription])
+        feedback = feedback_model.query_gemini_feedback(audio_text, "formal", 150)
+        print(feedback)
+    except Exception as e:
+        print("error:", e)
+        response = make_response(jsonify("failed to generage feedback"))
+        return response, 400
 
-    # response = make_response(jsonify({
-    #     "feedback": feedback
-    # }))
-    # return response, 200
     response = make_response(jsonify({
-        "feedback": "hello world"
+        "feedback": feedback
     }))
     return response, 200
 
