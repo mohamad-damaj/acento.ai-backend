@@ -12,7 +12,7 @@ class Gemini:
 
 
     def query_gemini_feedback(audio_text, situation):
-        input_index = ""
+        input_index = f"text: {audio_text} "
         
 
 
