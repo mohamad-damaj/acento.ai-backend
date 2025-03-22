@@ -5,7 +5,7 @@ def transcription(audio_path):
 
     result = model.transcribe(audio_path)
 
-    return result
+    return result["text"]
 
 
 
