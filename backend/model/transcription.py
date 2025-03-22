@@ -14,7 +14,7 @@ class transcriber():
 if __name__=="__main__":
     transcriber_model = transcriber()
 
-    segments = transcriber_model.transcription(audio_path=r"testing\test.mp3")
+    segments = transcriber_model.transcription(audio_path=r"testing\test.opus")
 
     for segment in segments:
         print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
