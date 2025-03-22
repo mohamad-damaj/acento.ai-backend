@@ -27,7 +27,7 @@ function App() {
 
   async function startRecording() {
     recordedChunks = [];
-    var options = { mimeType: "video/webm;codecs=vp9,opus" };
+    // var options = { mimeType: "video/webm;codecs=vp9,opus" };
     // console.log(navigator.mediaDevices.getUserMedia(constraints));
     await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
       try {

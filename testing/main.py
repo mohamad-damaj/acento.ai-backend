@@ -22,8 +22,6 @@ present.
 Using these extracted tonal qualities, begin with compliments on how the speech was well-done then 
 provide constructive criticism on how the speaker could improve their speech, especially with regards to their
 tone.
-
-
 """
 
 upload_file = genai.upload_file(audio_file_path)
