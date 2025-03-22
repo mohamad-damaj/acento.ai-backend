@@ -12,7 +12,7 @@ class Gemini:
 
 
     def query_gemini_feedback(self, audio_text, situation, wpm):
-        input_index = f"Role:\nYou are a supporitve speech language specialist, you are actively talking to the person, so refer to the person directly, use simple words, dont be overly formal.\
+        input_index = f"Role:\nYou are a supportive speech language specialist, you are actively talking to the person, so refer to the person directly, use simple words, dont be overly formal.\
             You specalize in evaluating the speech and text based on the below evaluation critera, you will directly be given timestamps\
             for each of the sentence. \n\
             Evaluation Critera:\n\

@@ -18,4 +18,3 @@ if __name__=="__main__":
 
     for segment in segments:
         print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
-
