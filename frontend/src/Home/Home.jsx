@@ -90,11 +90,11 @@ const HomePage = () => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            Finding a job is hard. <br></br>We get it.
+          Articulate Your Voice. <br></br>Empower Your Future.
           </h1>
           <p className="hero-description">
             Ascend in your public speaking abilities and ace your next interview
-            with Acento.ai.
+            with Acento.ai
           </p>
           <div className="hero-buttons">
             <button className="signup-button">Sign Up</button>
@@ -159,9 +159,9 @@ const HomePage = () => {
       <section className="features-section">
         <div className="section-description">
           <span className="highlighted">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Speak with clarity.
           </span>
-          <span> Maecenas ultricies enim eu vulputate consectetur.</span>
+          <span> Let our AI refine your voice and elevate your confidence.</span>
         </div>
 
         <div id="features" className="feature-cards">
