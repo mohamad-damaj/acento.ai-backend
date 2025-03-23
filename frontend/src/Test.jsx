@@ -71,7 +71,7 @@ function Test() {
     var data = new FormData();
     data.append("audio", audioBlob, "audio");
 
-    const URL = `${BACKEND_URL}/feedback/`;
+    const URL = `${BACKEND_URL}/feedback/audio`;
     fetch(URL, {
       method: "POST",
       body: data,
@@ -94,7 +94,29 @@ function Test() {
       audioInputRef.current.files[0].name
     );
 
-    const URL = `${BACKEND_URL}/feedback/`;
+    const URL = `${BACKEND_URL}/feedback/audio`;
+    fetch(URL, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+      })
+      .then((data) => {
+        setFeedback(data.feedback);
+      });
+  }
+
+  function handleAnalyzeVocal() {
+    const audioBlob = new Blob(recordedChunks, {
+      type: "audio/ogg;codecs=opus",
+    });
+
+    // upload form data
+    var data = new FormData();
+    data.append("vocal", audioBlob, "vocal");
+
+    const URL = `${BACKEND_URL}/feedback/vocal`;
     fetch(URL, {
       method: "POST",
       body: data,
@@ -120,6 +142,7 @@ function Test() {
       <button onClick={() => handleAnalyzeFileInput()}>
         Analyze file input
       </button>
+      <button onClick={() => handleAnalyzeVocal()}>Analyze Vocal</button>
       <div>{feedback}</div>
     </>
   );

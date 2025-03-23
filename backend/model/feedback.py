@@ -12,7 +12,7 @@ class Gemini:
         self.model = genai.GenerativeModel("gemini-2.0-flash")
 
 
-    def query_gemini_audio_feedback(self, audio_text, situation, wpm, context):
+    def query_gemini_audio_feedback(self, audio_text, situation, wpm, context=None):
         input_index = f"""Role:
         You are a supportive speech language specialist, you are actively talking to the person, so refer to the person directly, use simple words, dont be overly formal.\
             You specalize in evaluating the speech and text based on the below evaluation critera, you will directly be given timestamps\
@@ -51,7 +51,7 @@ class Gemini:
         return response.text
     
 
-    def query_gemini_vocal_feedback(self, audio_features, situation, context):
+    def query_gemini_vocal_feedback(self, audio_features, situation, context=None):
         input_index = f"""Role:
         You are a supportive speech-language specialist, speaking directly to the user in simple, informal language.
         You specialize in analyzing machine-collected speech metrics that the user does not fully understand, so do not reference specific numbers.
@@ -83,6 +83,11 @@ class Gemini:
         response = self.model.generate_content(input_index)
         return response.text
     
+    def query_gemini_resume_feedback(self):
+
+        pass
+
+
 if __name__ == "__main__":
     Gemini_model = Gemini()
     print(Gemini_model.query_gemini_feedback("I uh um it is um nice to meet you", "formal", 150, """{"filler_words": "Okay, I noticed you used "uh" and "um" quite a bit. In a formal setting, these can make you sound a little less confident. Try to pause instead – it can give you time to think and make you sound more in control.", "WPM": "Your pace is at 150 words per minute, which is a pretty good speed. It's not too fast, so people should be able to follow you easily.", "grammar": "Your grammar is good! I don't see any errors that need fixing.", "word_choice": "The phrase "nice to meet you" is perfectly fine and appropriate for a formal introduction. Good job!", "comprehensibility": "The message is very simple and easy to understand. However, the filler words at the beginning ("I uh um it is um nice to meet you") might distract your listener in a formal setting.", "content_structure": "Since this is a short greeting, there isn't much structure to discuss. It's direct and to the point, which is good.", "overall_recommendation": "Focus on minimizing those filler words to boost your confidence. Overall, you're off to a good start!"}"""))

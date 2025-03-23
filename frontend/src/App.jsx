@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import HomePage from "./Home/Home";
 import Dashboard from "./Dashboard/Dashboard";
 import UserAuthenticate from "./UserAuthenticate/UserAuthenticate";
+import Test from "./Test";
+import LogIn from "./Login";
+import SignUp from "./SignUp";
 
 function App() {
   const { currentUser, loading } = useAuth();
@@ -22,6 +25,9 @@ function App() {
           path="/dashboard"
           element={currentUser ? <Dashboard /> : <Navigate to="/auth" />}
         />
+        <Route path="/testing" element={<Test />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

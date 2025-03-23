@@ -1,15 +1,18 @@
 from flask import Flask, request, Blueprint, jsonify, make_response, render_template
 from ..model.transcription import Transcriber
 from ..model.feedback import Gemini
+from ..model.smile import Smile
+from ..model.word_utils import wpm
 import io
 
 # Create blueprint for endpoints
 bp = Blueprint("feedback", __name__)
 feedback_model = Gemini()
 transcribe_model = Transcriber()
+vocal_feature_model = Smile()
 
-@bp.route("/", methods=["POST"])
-def feedback():
+@bp.route("/audio", methods=["POST"])
+def audio_feedback():
     if "audio" in request.files:
         audio = request.files["audio"]
     else:
@@ -27,9 +30,13 @@ def feedback():
         return response, 400
 
     try: 
-        audio_text = " ".join([segment.text for segment in transcription])
+        audio_text = ""
+        for segment in transcription:
+            audio_text += "[%.2fs -> %.2fs] %s\n" % (segment.start, segment.end, segment.text)
+            print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
         print("audio", audio_text)
-        feedback = feedback_model.query_gemini_audio_feedback(audio_text, "formal", 150) # TODO: fix 2nd and 3rd parameters 
+        print(wpm(audio_text))
+        feedback = feedback_model.query_gemini_audio_feedback(audio_text, "formal", wpm(audio_text)) # TODO: fix 2nd and 3rd parameters 
         print(feedback)
     except Exception as e:
         print("error:", e)
@@ -40,3 +47,39 @@ def feedback():
         "feedback": feedback
     }))
     return response, 200
+
+
+@bp.route("/vocal", methods=["POST"])
+def vocal_feedback():
+    if "vocal" in request.files:
+        vocal = request.files["vocal"]
+    else:
+        response = make_response(jsonify("failed to receive file"))
+        return response, 400 
+
+    print(vocal.filename)
+    vocal.save("./file")
+    vocal.close()
+
+    try:
+        features, std = vocal_feature_model.feature_extract("./file")
+        print(features)
+    except Exception as e:
+        print("error:", e)
+        response = make_response(jsonify("failed to generate features"))
+        return response, 400
+    
+    try:
+        feedback = feedback_model.query_gemini_vocal_feedback(features, "")
+        print(feedback)
+    except Exception as e:
+        response = make_response(jsonify("failed to generate feedback"))
+        return response, 400
+        pass
+
+    response = make_response(jsonify({
+        "feedback": feedback
+    }))
+    return response, 200
+    
+

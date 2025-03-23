@@ -167,7 +167,13 @@ const HomePage = () => {
         <div id="features" className="feature-cards">
           <div className="feature-card">
             <div className="feature-icon"></div> {/* Placeholder for icon */}
-            <h3 className="feature-title">Here's one feature</h3>
+            <h3 className="feature-title">Speech Analysis</h3>
+            <p className="feature-text">Based on yo</p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-icon"></div> {/* Placeholder for icon */}
+            <h3 className="feature-title">Vocal Analysis</h3>
             <p className="feature-text">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
               ligula neque, feugiat eu malesuada elementum.
@@ -176,16 +182,7 @@ const HomePage = () => {
 
           <div className="feature-card">
             <div className="feature-icon"></div> {/* Placeholder for icon */}
-            <h3 className="feature-title">Here's two features</h3>
-            <p className="feature-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              ligula neque, feugiat eu malesuada elementum.
-            </p>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon"></div> {/* Placeholder for icon */}
-            <h3 className="feature-title">Here's three features</h3>
+            <h3 className="feature-title">Resume Analysis</h3>
             <p className="feature-text">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
               ligula neque, feugiat eu malesuada elementum.
