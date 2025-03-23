@@ -14,6 +14,7 @@ import logo10 from "./../assets/logos/logo10.svg";
 import logo11 from "./../assets/logos/logo11.svg";
 import logo12 from "./../assets/logos/logo12.svg";
 import arrow from "./../assets/arrow.svg";
+import { signIn } from "../services/auth";
 
 const HomePage = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -70,7 +71,14 @@ const HomePage = () => {
           <a href="#" className="nav-link login">
             Login
           </a>
-          <button className="signup-button">Sign Up</button>
+          <button
+            className="signup-button"
+            onClick={() => {
+              signIn("abcd@gmail.com", "password");
+            }}
+          >
+            Sign Up
+          </button>
         </div>
       </nav>
 
