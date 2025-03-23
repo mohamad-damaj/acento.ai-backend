@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import {
   getUserChats,
   getUserMessages,
+  replyFromAudio,
   startNewChatFromAudio,
 } from "../services/firestore";
 import { useAuth } from "../services/AuthContext";
@@ -26,11 +27,17 @@ function Dashboard() {
   const fileInputRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
 
+  const [textData, setTextData] = useState("");
+
   function handleDataAvailable(event) {
     console.log("handleDataAvailable:", event);
     if (event.data && event.data.size > 0) {
       recordedChunksRef.current.push(event.data);
     }
+  }
+
+  function sendContextFile(e, blob) {
+    currentUser.uid, blob, replyFromAudio(currentUser.uid, blob);
   }
 
   function handleStop(event) {
@@ -471,7 +478,26 @@ function Dashboard() {
           </div>
         )}
         {currentChatUid && (
-          <textarea name="" id="input-field" defaultValue={"Input"} />
+          <div className="textarea-wrapper">
+            <textarea
+              name=""
+              id="input-field"
+              defaultValue={""}
+              onChange={(e) => {
+                setTextData(e.target.value);
+              }}
+            />
+            <svg
+              height="48"
+              viewBox="0 0 48 48"
+              width="48"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={sendContextFile}
+            >
+              <path d="M4.02 42l41.98-18-41.98-18-.02 14 30 4-30 4z" />
+              <path d="M0 0h48v48h-48z" fill="none" />
+            </svg>
+          </div>
         )}
       </div>
     </div>

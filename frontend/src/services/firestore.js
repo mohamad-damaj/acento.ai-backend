@@ -3,6 +3,7 @@ import {
   collection,
   doc,
   getDocs,
+  orderBy,
   query,
   setDoc,
 } from "firebase/firestore";
@@ -17,7 +18,10 @@ export const getUser = (userId) => {
 };
 
 export const getUserChats = async (userId) => {
-  const q = query(collection(db, `users/${userId}/chats`));
+  const q = query(
+    collection(db, `users/${userId}/chats`),
+    orderBy("time", "desc")
+  );
   const querySnap = await getDocs(q);
   var result = [];
 
@@ -32,7 +36,10 @@ export const getUserChats = async (userId) => {
 };
 
 export const getUserMessages = async (userId, chatId) => {
-  const q = query(collection(db, `users/${userId}/chats/${chatId}/messages`));
+  const q = query(
+    collection(db, `users/${userId}/chats/${chatId}/messages`),
+    orderBy("time", "desc")
+  );
   const querySnap = await getDocs(q);
   var result = [];
 
@@ -44,6 +51,35 @@ export const getUserMessages = async (userId, chatId) => {
   });
 
   return result;
+};
+
+export const replyFromAudio = async (userId, audioBlob, context, chatId) => {
+  var data = new FormData();
+  data.append("audio", audioBlob, "audio");
+  data.append("context", context, "context");
+  const URL = `${BACKEND_URL}/feedback/audio`;
+  console.log(URL);
+  console.log(data);
+  const response = await fetch(URL, {
+    method: "POST",
+    body: data,
+  });
+  if (response.ok) {
+    const json = await response.json();
+    print("json");
+    print(json);
+    await addDoc(collection(db, `users/${userId}/chats/${chatId}/messages`), {
+      time: Date.now(),
+      fromUser: false,
+      type: "audioResponse",
+      content: JSON.stringify(json.feedback),
+    });
+  } else {
+    console.log("ERROR");
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(await response.json());
+  }
 };
 
 export const startNewChatFromAudio = async (
@@ -92,21 +128,30 @@ export const startNewChatFromAudio = async (
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const URL = `${BACKEND_URL}/feedback/audio`;
+  console.log(URL);
+  console.log(data);
   const response = await fetch(URL, {
     method: "POST",
     body: data,
   });
   if (response.ok) {
     const json = await response.json();
+    print("json");
+    print(json);
     await addDoc(
       collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
       {
         time: Date.now(),
         fromUser: false,
         type: "audioResponse",
-        content: json.feedback,
+        content: JSON.stringify(json.feedback),
       }
     );
+  } else {
+    console.log("ERROR");
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(await response.json());
   }
 
   const URL2 = `${BACKEND_URL}/feedback/vocal`;
@@ -116,6 +161,8 @@ export const startNewChatFromAudio = async (
   });
   if (response.ok) {
     const json2 = await response2.json();
+    print("json2");
+    print(json2);
     await addDoc(
       collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
       {
@@ -125,6 +172,10 @@ export const startNewChatFromAudio = async (
         content: json2.feedback,
       }
     );
+  } else {
+    console.log("ERROR");
+    console.log(response.status);
+    console.log(response.statusText);
   }
 };
 
