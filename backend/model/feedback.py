@@ -41,9 +41,10 @@ class Gemini:
                 2. Estimate WPM and discuss if it's too fast, too slow, or appropriate.
                 3. Assess grammar, including any mistakes, and provide a brief rating.
                 4. Comment on choice of words in context.
-                5. Comment on the comprehensibility of the text, identify any elements that distract from the central message, reference them and their timestamp.
+                5. Comment on the comprehensibility of the text, identify any elements that distract from the central message, reference them and their timestamp using [].
                 6. Comment on the content structure and how well it is
                 7. End with an overall recommendation or conclusion in one or two sentences.
+                Reference any timestamp using []
             ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"filler_words":"<filler words information>", "grammar": "<grammar information>", ...\}}
                     """
 
