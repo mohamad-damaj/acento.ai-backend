@@ -7,7 +7,7 @@ import {
   startNewChatFromAudio,
 } from "../services/firestore";
 import { useAuth } from "../services/AuthContext";
-import Chat from "../components/Chat/Chat";
+import DashboardChat from "../DashboardChat/DashboardChat";
 
 function Dashboard() {
   const constraints = { audio: true };
@@ -235,6 +235,7 @@ function Dashboard() {
                   console.log(chat);
                   return (
                     <li
+                      key={chat.docId}
                       className="list-item"
                       onClick={() => {
                         setCurrentChatUid(chat.docId);
@@ -258,11 +259,7 @@ function Dashboard() {
           })
         ) */}
         {currentChat ? (
-          currentChat.map((message) => {
-            <h1 className={message.fromUser ? "user-message" : "chat-message"}>
-              {message.content}
-            </h1>;
-          })
+          <DashboardChat chat={currentChat} />
         ) : (
           <div className="dashboard-content">
             <div className="input-section">
