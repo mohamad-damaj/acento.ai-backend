@@ -36,6 +36,8 @@ class Gemini:
             Text to Evaluate: {audio_text}
             Word per Minute: {wpm}
             Situation: {situation}
+            IMPORTANT:
+            You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
             Required Output:
                 1. Summarize what filler words were used and talk about their impact on clarify given the situation.
                 2. Estimate WPM and discuss if it's too fast, too slow, or appropriate.
@@ -45,7 +47,7 @@ class Gemini:
                 6. Comment on the content structure and how well it is
                 7. End with an overall recommendation or conclusion in one or two sentences.
                 Reference any timestamp using []
-            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"filler_words":"<filler words information>", "grammar": "<grammar information>", ...\}}
+            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"Filler_words":"<filler words information>", "Grammar": "<grammar information>", ...\}}
                     """
 
         response = self.model.generate_content(input_index)
@@ -84,9 +86,34 @@ class Gemini:
         response = self.model.generate_content(input_index)
         return response.text
     
-    def query_gemini_resume_feedback(self):
+    def query_gemini_resume_feedback(self, resume, job_description = None):
+        
+        input_index = f"""You are a ResumeChecker, an expert in optimizing resumes for recruitment. Prove a deep analysis of the following resume:
+        
+        Resume = {resume}
+        Job Description (if applicable): {job_description}
 
-        pass
+        Required Output:
+        Your Strengths: List key strengths of the resume.
+        Improvements: Suggest specific improvements with specific appliable recommendations.
+        Brevity: Rate the brevity of the writing out of 10
+        Style: Rate the word style out of 10
+        Strucuture: Rate the strucutre of the resume out of 10
+        Skills: Rate the skills present in the resume out of 10
+        ATS Compatibility: Give an ATS compatibility score out of 100 with respect to job description, if it is None, then do it with respect to a generic job in the field
+        ATS Improvements: Suggest specific improvements to increase ATS score.
+        IMPORTANT:
+        You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
+        
+        ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: 
+        {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
+
+        """
+        response = self.model.generate_content(input_index)
+        return response.text
+
+
+    
 
 
 if __name__ == "__main__":
