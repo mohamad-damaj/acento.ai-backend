@@ -37,7 +37,7 @@ class Gemini:
             Word per Minute: {wpm}
             Situation: {situation}
             IMPORTANT:
-            You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
+            You must return your answer in EXACTLY the following format (no extra keys, text, or commentary):
             Required Output:
                 1. Summarize what filler words were used and talk about their impact on clarify given the situation.
                 2. Estimate WPM and discuss if it's too fast, too slow, or appropriate.
@@ -47,7 +47,7 @@ class Gemini:
                 6. Comment on the content structure and how well it is
                 7. End with an overall recommendation or conclusion in one or two sentences.
                 Reference any timestamp using []
-            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"Filler_words":"<filler words information>", "Grammar": "<grammar information>", ...\}}
+            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE: {{"Filler_words":"<filler words information>", "Grammar": "<grammar information>", ...\}}
                     """
 
         response = self.model.generate_content(input_index)
@@ -76,7 +76,7 @@ class Gemini:
         Audio Feature Data: {audio_features}
 
         IMPORTANT:
-        You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
+        You must return your answer in EXACTLY the following DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE: (no extra keys, text, or commentary):
 
         {{
         "Vocal Dynamics": "<Summarize how the user sounds overall>",
@@ -103,9 +103,9 @@ class Gemini:
         ATS Compatibility: Give an ATS compatibility score out of 100 with respect to job description, if it is None, then do it with respect to a generic job in the field
         ATS Improvements: Suggest specific improvements to increase ATS score.
         IMPORTANT:
-        You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
+        You must return your answer in EXACTLY the following format (no extra keys, text, or commentary):
         
-        ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: 
+        ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE: 
         {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
 
         """

@@ -136,7 +136,7 @@ function Test() {
         <button onClick={() => stopRecording()}>Stop</button>
         <input ref={audioInputRef} type="file" />
       </div>
-      <audio ref={audioRef} controls id="beep"></audio>
+      <audio ref={audioRef} controls id="beep">asasa</audio>
       <br></br>
       <button onClick={() => handleAnalyze()}>Analyze</button>
       <button onClick={() => handleAnalyzeFileInput()}>
