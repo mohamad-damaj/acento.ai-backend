@@ -19,33 +19,6 @@ function Dashboard() {
   const audioInputRef = useRef();
   const [feedback, setFeedback] = useState("");
 
-  const handleAudioChange = async (event) => {
-    const file = event.target.files[0];
-
-    if (!file) {
-      setAudioBlob(null);
-      return;
-    }
-
-    if (!file.type.startsWith("audio/")) {
-      setErrorMessage("Please select an audio file.");
-      setAudioBlob(null);
-      return;
-    }
-
-    setErrorMessage(null);
-
-    try {
-      const arrayBuffer = await file.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: file.type });
-      setAudioBlob(blob);
-    } catch (error) {
-      console.error("Error converting audio to blob:", error);
-      setErrorMessage("Error processing audio file.");
-      setAudioBlob(null);
-    }
-  };
-
   function handleDataAvailable(event) {
     console.log("handleDataAvailable", event);
     if (event.data && event.data.size > 0) {
@@ -184,11 +157,16 @@ function Dashboard() {
       //   type: "audio/ogg;codecs=opus",
       // });
       const reader = new FileReader();
-      reader.onload = function (e) {
+      reader.onload = async function (e) {
         const blob = new Blob([new Uint8Array(e.target.result)], {
           type: selectedFile.type,
         });
-        startNewChatFromAudio(currentUser.uid, blob, updateChats);
+        await startNewChatFromAudio(
+          currentUser.uid,
+          blob,
+          updateChats,
+          setCurrentChatUid
+        );
       };
       reader.readAsArrayBuffer(selectedFile);
       return;
@@ -317,7 +295,7 @@ function Dashboard() {
         <input
           type="file"
           accept="audio/*, application/pdf"
-          onChange={handleAudioChange}
+          onChange={handleFileChange}
         />
         {currentChatUid && (
           <textarea name="" id="input-field" defaultValue={"Input"} />
