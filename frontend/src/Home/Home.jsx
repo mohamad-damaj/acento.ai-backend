@@ -50,8 +50,8 @@ const HomePage = () => {
     <>
       <nav className="navbar">
         <div className="navbar-left">
-          <div className="logo-icon"></div>
-          <span className="logo-name">Placeholder</span>
+          {/* <div className="logo-icon"></div> */}
+          <span className="logo-name">Acento.ai</span>
         </div>
         <div className="navbar-middle">
           <a href="#" className="nav-link">
@@ -84,16 +84,23 @@ const HomePage = () => {
 
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">Finding a job is hard. We get it.</h1>
+          <h1 className="hero-title">
+            Finding a job is hard. <br></br>We get it.
+          </h1>
           <p className="hero-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ligula
-            neque, feugiat eu malesuada elementum.
+            Ascend in your public speaking abilities and ace your next interview
+            with Acento.ai.
           </p>
           <div className="hero-buttons">
             <button className="signup-button">Sign Up</button>
-            <button className="features-button">Features</button>
+            <button
+              onClick={() => (window.location.href = "#features")}
+              className="features-button"
+            >
+              Features
+            </button>
           </div>
-          <p className="no-credit-card">no credit card required</p>
+          {/* <p className="no-credit-card">no credit card required</p> */}
           <img src={lines} alt="Lines" className="lines-svg" />
         </div>
       </section>
@@ -102,7 +109,7 @@ const HomePage = () => {
         <div className="teaser" />
       </section>
 
-      <section className="businesses-section">
+      {/* <section className="businesses-section">
         <h2 className="section-title">Businesses we've landed</h2>
         <div className="logo-grid">
           <div className="logo-item">
@@ -142,7 +149,7 @@ const HomePage = () => {
             <img src={logo12} alt="Logo 6" />
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="features-section">
         <div className="section-description">
@@ -152,7 +159,7 @@ const HomePage = () => {
           <span> Maecenas ultricies enim eu vulputate consectetur.</span>
         </div>
 
-        <div className="feature-cards">
+        <div id="features" className="feature-cards">
           <div className="feature-card">
             <div className="feature-icon"></div> {/* Placeholder for icon */}
             <h3 className="feature-title">Here's one feature</h3>

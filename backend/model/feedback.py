@@ -28,7 +28,7 @@ class Gemini:
                1. Filler Words: Count common filler words (“um,” “like,” “you know,” etc.) and note how they affect clarity.
                2. WPM: Give a brief explanation of how comfortable or rushed this rate might feel given the WPM.
                3. Grammar: Rate speech grammar on a scale of Poor/Fair/Good/Excellent, and briefly explain what can be improved by citing examples (dont give any if their grammar is good)\
-                from the given text and give timestamps for the examples, ignore puncuation and grammar that is unique to writing.
+                from the given text and give timestamps for the examples, ignore punctuation and grammar that is unique to writing.
                4. Word Choice: State how well the words fit the the given situation (formal, semi-formal, casual). Note if certain words improved or removed from clarity.
                5. Comprehensibility: Assess how easy or difficult it is for a reader to grasp that main idea in context with the situation
                6. Content Structure: Look at how the speaker transitions between points, whether they provide signposts and if the main message is well-supported by evidence or stories.

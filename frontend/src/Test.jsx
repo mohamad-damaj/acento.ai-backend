@@ -8,6 +8,7 @@ function Test() {
   let mediaRecorder;
   let recordedChunks;
   const audioRef = useRef();
+  const audioInputRef = useRef();
   const [feedback, setFeedback] = useState("");
 
   function handleDataAvailable(event) {
@@ -39,12 +40,7 @@ function Test() {
         return;
       }
     });
-    // var mediaRecorder = new MediaRecorder(
-    //   navigator.mediaDevices.getUserMedia(constraints),
-    //   options
-    // );
-    // console.log(mediaRecorder);
-    console.log("reached here");
+
     mediaRecorder.onstop = (event) => {
       console.log("Recorder stopped: ", event);
       console.log("Recorded Blobs: ", recordedChunks);
@@ -54,6 +50,7 @@ function Test() {
       });
       setPlay(superBuffer);
     };
+
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start();
     console.log("MediaRecorder started", mediaRecorder.state);
@@ -72,7 +69,30 @@ function Test() {
 
     // upload form data
     var data = new FormData();
-    data.append("file", audioBlob, "file");
+    data.append("audio", audioBlob, "audio");
+
+    const URL = `${BACKEND_URL}/feedback/`;
+    fetch(URL, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+      })
+      .then((data) => {
+        setFeedback(data.feedback);
+      });
+  }
+
+  function handleAnalyzeFileInput() {
+    console.log(audioInputRef.current.files[0].name);
+    // upload form data
+    var data = new FormData();
+    data.append(
+      "audio",
+      audioInputRef.current.files[0],
+      audioInputRef.current.files[0].name
+    );
 
     const URL = `${BACKEND_URL}/feedback/`;
     fetch(URL, {
@@ -92,11 +112,14 @@ function Test() {
       <div className="container">
         <button onClick={() => startRecording()}>Start</button>
         <button onClick={() => stopRecording()}>Stop</button>
-        <input id="upload" type="file" />
+        <input ref={audioInputRef} type="file" />
       </div>
       <audio ref={audioRef} controls id="beep"></audio>
       <br></br>
       <button onClick={() => handleAnalyze()}>Analyze</button>
+      <button onClick={() => handleAnalyzeFileInput()}>
+        Analyze file input
+      </button>
       <div>{feedback}</div>
     </>
   );
