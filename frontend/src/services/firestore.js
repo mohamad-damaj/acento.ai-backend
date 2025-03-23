@@ -70,7 +70,7 @@ export const startNewChatFromAudio = async (
       collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
       {
         time: Date.now(),
-        fromUser: false,
+        fromUser: true,
         type: "audio",
         content: base64, // Parse audio file into base64 and add here as content
       }
@@ -80,6 +80,52 @@ export const startNewChatFromAudio = async (
   // Update the ui by calling updateChats and then callign setCurrentChatUid
   await updateChats();
   setCurrentChatUid(newChatDoc.id);
+
+  // const audioBlob = new Blob(recordedChunks, {
+  //   type: "audio/ogg;codecs=opus",
+  // });
+
+  // upload form data
+  var data = new FormData();
+  data.append("audio", audioBlob, "audio");
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+  const URL = `${BACKEND_URL}/feedback/audio`;
+  const response = await fetch(URL, {
+    method: "POST",
+    body: data,
+  });
+  if (response.ok) {
+    const json = await response.json();
+    await addDoc(
+      collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
+      {
+        time: Date.now(),
+        fromUser: false,
+        type: "audioResponse",
+        content: json.feedback,
+      }
+    );
+  }
+
+  const URL2 = `${BACKEND_URL}/feedback/vocal`;
+  const response2 = await fetch(URL2, {
+    method: "POST",
+    body: data,
+  });
+  if (response.ok) {
+    const json2 = await response2.json();
+    await addDoc(
+      collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
+      {
+        time: Date.now(),
+        fromUser: false,
+        type: "audioResponse",
+        content: json2.feedback,
+      }
+    );
+  }
 };
 
 export const getCollection = (collectionName) => {

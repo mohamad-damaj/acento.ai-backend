@@ -13,18 +13,139 @@ function Dashboard() {
   const constraints = { audio: true };
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   // use later
-  let mediaRecorder;
-  let recordedChunks;
-  const audioRef = useRef();
+
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
+  const audioRef = useRef(null);
+
   const audioInputRef = useRef();
   const [feedback, setFeedback] = useState("");
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  const [isRecording, setIsRecording] = useState(false);
+
   function handleDataAvailable(event) {
-    console.log("handleDataAvailable", event);
+    console.log("handleDataAvailable:", event);
     if (event.data && event.data.size > 0) {
-      recordedChunks.push(event.data);
+      recordedChunksRef.current.push(event.data);
     }
   }
+
+  function handleStop(event) {
+    console.log("Recorder stopped:", event);
+    console.log("Recorded Blobs:", recordedChunksRef.current);
+
+    // If you want to play it back or do something with the blob here:
+    const superBuffer = new Blob(recordedChunksRef.current, {
+      type: "audio/ogg;codecs=opus",
+    });
+    setSelectedFile(superBuffer);
+    console.log("audio blob:", superBuffer);
+    // Optionally set up audio playback
+    // setPlay(superBuffer);
+  }
+
+  async function startRecording() {
+    try {
+      recordedChunksRef.current = []; // reset for new recording
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      mediaRecorder.ondataavailable = handleDataAvailable;
+      mediaRecorder.onstop = handleStop;
+
+      mediaRecorder.start();
+      console.log("MediaRecorder started:", mediaRecorder.state);
+      setIsRecording(true);
+    } catch (error) {
+      console.error("Exception while creating MediaRecorder:", error);
+    }
+  }
+
+  function stopRecording() {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      console.log("MediaRecorder stopped:", mediaRecorderRef.current.state);
+      setIsRecording(false);
+    }
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (
+      file &&
+      (file.type === "audio/mpeg" || file.type === "application/pdf")
+    ) {
+      setSelectedFile(file);
+      setError(null);
+    } else {
+      setSelectedFile(null);
+      setError("Invalid file type. Please upload an audio/mpeg or PDF file.");
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+
+    if (
+      file &&
+      (file.type === "audio/mpeg" || file.type === "application/pdf")
+    ) {
+      setSelectedFile(file);
+      setError(null);
+    } else {
+      setSelectedFile(null);
+      setError("Invalid file type. Please upload an audio/mpeg or PDF file.");
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleUpload = () => {
+    sendAudio();
+  };
+
+  const handleAudioChange = async (event) => {
+    const file = event.target.files[0];
+
+    if (!file) {
+      setAudioBlob(null);
+      return;
+    }
+
+    if (!file.type.startsWith("audio/")) {
+      setErrorMessage("Please select an audio file.");
+      setAudioBlob(null);
+      return;
+    }
+
+    setErrorMessage(null);
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: file.type });
+      setAudioBlob(blob);
+    } catch (error) {
+      console.error("Error converting audio to blob:", error);
+      setErrorMessage("Error processing audio file.");
+      setAudioBlob(null);
+    }
+  };
+
+  //   function handleDataAvailable(event) {
+  //     console.log("handleDataAvailable", event);
+  //     if (event.data && event.data.size > 0) {
+  //       recordedChunks.push(event.data);
+  //     }
+  //   }
 
   function setPlay(blob) {
     audioRef.current.src = null;
@@ -34,41 +155,59 @@ function Dashboard() {
     // audioRef.current.play();
   }
 
-  async function startRecording() {
-    recordedChunks = [];
-    // var options = { mimeType: "audio/webm;codecs=opus" };
-    // console.log(navigator.mediaDevices.getUserMedia(constraints));
-    await navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-      try {
-        console.log(stream);
-        mediaRecorder = new MediaRecorder(stream);
-        console.log(mediaRecorder.state);
-      } catch (e) {
-        console.error("Exception while creating MediaRecorder:", e);
-        return;
-      }
-    });
+  //   async function startRecording() {
+  //     setIsRecording(true);
+  //     let recordedChunks = [];
+  //     // var options = { mimeType: "audio/webm;codecs=opus" };
+  //     // console.log(navigator.mediaDevices.getUserMedia(constraints));
+  //     try {
+  //       recordedChunksRef.current = []; // reset for new recording
+  //       const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
-    mediaRecorder.onstop = (event) => {
-      console.log("Recorder stopped: ", event);
-      console.log("Recorded Blobs: ", recordedChunks);
-      // set audio playback
-      const superBuffer = new Blob(recordedChunks, {
-        type: "audio/ogg;codecs=opus",
-      });
-      console.log("audio", superBuffer);
-      // setPlay(superBuffer);
-    };
+  //       const mediaRecorder = new MediaRecorder(stream);
+  //       mediaRecorderRef.current = mediaRecorder;
 
-    mediaRecorder.ondataavailable = handleDataAvailable;
-    mediaRecorder.start();
-    console.log("MediaRecorder started", mediaRecorder.state);
-  }
+  //       mediaRecorder.ondataavailable = handleDataAvailable;
+  //       mediaRecorder.onstop = stopRecording;
 
-  function stopRecording() {
-    mediaRecorder.stop();
-    console.log("MediaRecorder stopped", mediaRecorder.state);
-  }
+  //       mediaRecorder.start();
+  //       console.log("MediaRecorder started:", mediaRecorder.state);
+  //     } catch (error) {
+  //       console.error("Exception while creating MediaRecorder:", error);
+  //     }
+
+  //     mediaRecorderRef.current.onstop = (event) => {
+  //       console.log("Recorder stopped: ", event);
+  //       console.log("Recorded Blobs: ", recordedChunks);
+  //       // set audio playback
+  //       const superBuffer = new Blob(recordedChunks, {
+  //         type: "audio/ogg;codecs=opus",
+  //       });
+  //       console.log("audio", superBuffer);
+  //       // setPlay(superBuffer);
+  //     };
+
+  //     mediaRecorderRef.current.ondataavailable = handleDataAvailable;
+  //     mediaRecorderRef.current.start();
+  //     console.log(
+  //       "mediaRecorderRef.current started",
+  //       mediaRecorderRef.current.state
+  //     );
+  //   }
+
+  //   function stopRecording() {
+  //     setIsRecording(false);
+  //     console.log("Recorder stopped:", event);
+  //     console.log("Recorded Blobs:", recordedChunksRef.current);
+
+  //     // If you want to play it back or do something with the blob here:
+  //     const superBuffer = new Blob(recordedChunksRef.current, {
+  //       type: "audio/ogg;codecs=opus",
+  //     });
+  //     console.log("audio blob:", superBuffer);
+  //     // Optionally set up audio playback
+  //     // setPlay(superBuffer);
+  //   }
 
   // will make request to flask backend
   function handleAnalyze() {
@@ -144,12 +283,12 @@ function Dashboard() {
   const [currentChatUid, setCurrentChatUid] = useState("");
   const { currentUser } = useAuth();
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  //   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    console.log(selectedFile);
-  };
+  //   const handleFileChange = (event) => {
+  //     setSelectedFile(event.target.files[0]);
+  //     console.log(selectedFile);
+  //   };
 
   async function sendAudio() {
     if (selectedFile) {
@@ -286,17 +425,51 @@ function Dashboard() {
           <div className="dashboard-content">
             <div className="input-section"></div>
             <div className="button-section">
-              <button onClick={() => startRecording()}>Start recording</button>
+              {/* <button onClick={() => startRecording()}>Start recording</button>
               <button onClick={() => stopRecording()}>Stop recording</button>
               <button onClick={() => sendAudio()}>Upload</button>
+              <input
+                type="file"
+                accept="audio/*, application/pdf"
+                onChange={handleAudioChange}
+              /> */}
+              <div
+                className="file-upload-container"
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+              >
+                <input
+                  type="file"
+                  accept="audio/mpeg, application/pdf"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                  //   className="file-input"
+                />
+                <label htmlFor="file-input" className="file-label">
+                  {selectedFile
+                    ? selectedFile.name
+                    : "Drag & drop or click to upload"}
+                </label>
+
+                {error && <p className="error-message">{error}</p>}
+
+                {selectedFile && (
+                  <button className="upload-button" onClick={handleUpload}>
+                    Upload
+                  </button>
+                )}
+              </div>
+              {isRecording && (
+                <button onClick={() => stopRecording()}>Stop recording</button>
+              )}
+              {!isRecording && (
+                <button onClick={() => startRecording()}>
+                  Start recording
+                </button>
+              )}
             </div>
           </div>
         )}
-        <input
-          type="file"
-          accept="audio/*, application/pdf"
-          onChange={handleFileChange}
-        />
         {currentChatUid && (
           <textarea name="" id="input-field" defaultValue={"Input"} />
         )}
