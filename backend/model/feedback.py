@@ -12,11 +12,18 @@ class Gemini:
         self.model = genai.GenerativeModel("gemini-2.0-flash")
 
 
-    def query_gemini_feedback(self, audio_text, situation, wpm):
+    def query_gemini_audio_feedback(self, audio_text, situation, wpm, context):
         input_index = f"""Role:
         You are a supportive speech language specialist, you are actively talking to the person, so refer to the person directly, use simple words, dont be overly formal.\
             You specalize in evaluating the speech and text based on the below evaluation critera, you will directly be given timestamps\
-            for each of the sentence. 
+            for each of the sentence.
+
+            Context:
+            The user has received the following previous feedback:
+            {context}
+
+            Do not repeat that same feedback. Instead, refine or expand upon it if there are new insights to add.
+            If no changes are necessary, confirm that the user can proceed with the guidance already shared. 
             Evaluation Critera:
                1. Filler Words: Count common filler words (“um,” “like,” “you know,” etc.) and note how they affect clarity.
                2. WPM: Give a brief explanation of how comfortable or rushed this rate might feel given the WPM.
@@ -44,28 +51,41 @@ class Gemini:
         return response.text
     
 
-    def query_gemini_vocal_feedback(self, audio_features, situation):
-        input_index = f"""You are an advanced language model specializing in acoustic analysis and speech coaching. The user wants to improve their articulation for {situation}.
+    def query_gemini_vocal_feedback(self, audio_features, situation, context):
+        input_index = f"""Role:
+        You are a supportive speech-language specialist, speaking directly to the user in simple, informal language.
+        You specialize in analyzing machine-collected speech metrics that the user does not fully understand, so do not reference specific numbers.
+        Instead, interpret it for them in plain language.
 
-                        They have provided the following summary of audio features extracted via openSMILE:
+        The user wants to improve their articulation for: {situation}.
+        Context:
+        The user has received the following previous feedback:
+        {context}
 
-                        {audio_features}
+        Do not repeat that same feedback. Instead, refine or expand upon it if there are new insights to add.
+        If no changes are necessary, confirm that the user can proceed with the guidance already shared.
 
-                        Each column represents a key dimension of their speech (e.g., pitch in semitones, average loudness, spectral balance, etc.). Please analyze these metrics and determine how the speaker’s articulation, clarity, and expressiveness could be improved specifically for {situation}. 
+        Required Output:
+            1. Evaluate the user's pitch variation, loudness, speaking rate, and overall vocal dynamics based on the provided data.
+            2. Identify potential weaknesses (e.g., monotone pitch, insufficient volume, overly fast tempo).
+            3. Offer concise, actionable tips to help the user become more articulate, specifically for {situation}.
 
-                        In your response, please:
-                        • Evaluate the user’s pitch variation, loudness, speaking rate, and overall vocal dynamics based on the provided data.
-                        • Identify potential weaknesses (e.g., monotone pitch, insufficient volume, overly fast tempo).
-                        • Offer clear, actionable tips to help the user become more articulate—tailoring advice to {situation}.
-                        • Explain any relevant terminology (e.g., semitone, RMS loudness) in plain language so the user can understand how to adjust their speech.
+        Audio Feature Data: {audio_features}
 
-                        Provide your feedback in concise paragraphs or bullet points so the user can easily follow your recommendations."""
+        IMPORTANT:
+        You must return your answer in EXACTLY the following JSON format (no extra keys, text, or commentary):
+
+        {{
+        "Vocal Dynamics": "<Summarize how the user sounds overall>",
+        "Weaknesses": "<Highlight their potential weaknesses>",
+        "Advice": "<Give clear suggestions for improvement>"
+        }}"""
         response = self.model.generate_content(input_index)
         return response.text
     
 if __name__ == "__main__":
     Gemini_model = Gemini()
-    print(Gemini_model.query_gemini_feedback("I uh um it is um nice to meet you", "formal", 150))
+    print(Gemini_model.query_gemini_feedback("I uh um it is um nice to meet you", "formal", 150, """{"filler_words": "Okay, I noticed you used "uh" and "um" quite a bit. In a formal setting, these can make you sound a little less confident. Try to pause instead – it can give you time to think and make you sound more in control.", "WPM": "Your pace is at 150 words per minute, which is a pretty good speed. It's not too fast, so people should be able to follow you easily.", "grammar": "Your grammar is good! I don't see any errors that need fixing.", "word_choice": "The phrase "nice to meet you" is perfectly fine and appropriate for a formal introduction. Good job!", "comprehensibility": "The message is very simple and easy to understand. However, the filler words at the beginning ("I uh um it is um nice to meet you") might distract your listener in a formal setting.", "content_structure": "Since this is a short greeting, there isn't much structure to discuss. It's direct and to the point, which is good.", "overall_recommendation": "Focus on minimizing those filler words to boost your confidence. Overall, you're off to a good start!"}"""))
                             
 
         
