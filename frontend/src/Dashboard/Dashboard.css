@@ -4,11 +4,46 @@
 }
 
 .dashboard-main {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  flex: auto;
+  background-color: #fff;
+  border-radius: 3rem;
+  overflow: scroll;
+  position: sticky;
+  justify-content: center;
+}
+
+.dashboard-wrapper {
+  width: 100%;
+  background-color: white;
+  overflow: scroll;
+  border-radius: 32px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#input-field {
+  position: absolute;
+  resize: vertical;
+  border: none;
+  background-color: #eef0ef;
+  bottom: 0px;
+  border-radius: 32px;
+  height: 64px;
+  width: 760px;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .dashboard-sidebar {
-  min-width: 280px;
+  width: 280px;
   height: 100vh;
   color: #070036;
   display: flex;
@@ -25,17 +60,6 @@
 
 .dashboard-sidebar.collapsed {
   width: 60px; /* Collapsed width */
-}
-
-.dashboard-main {
-  display: flex;
-  flex-direction: row;
-  flex: auto;
-  background-color: #fff;
-  border-radius: 3rem;
-  overflow: scroll;
-  position: sticky;
-  justify-content: center;
 }
 
 .sidebar-header {

@@ -37,7 +37,6 @@ function DashboardChat({ chat }) {
             );
           }
         })}
-        <textarea name="" id="input-field" defaultValue={"Input"} />
       </div>
     </>
   );

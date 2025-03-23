@@ -4,7 +4,6 @@
   flex: auto;
   justify-content: flex-end;
   padding-bottom: 120px;
-  position: relative;
   max-width: 760px;
   align-items: center;
 }
@@ -25,20 +24,4 @@
 .message.bot {
   background-color: #eef0ef;
   align-self: flex-start;
-}
-
-#input-field {
-  position: absolute;
-  resize: vertical;
-  border: none;
-  background-color: #eef0ef;
-
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-
-  border-radius: 32px;
-  height: 64px;
-
-  width: 760px;
 }

@@ -46,7 +46,38 @@ export const getUserMessages = async (userId, chatId) => {
   return result;
 };
 
-export const startNewChatFromAudio = async (userId, audioBlob, updateChats) => {
+async function blobAudioToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let base64String = reader.result;
+      // Remove the data URL prefix if you only want the base64 part
+      const base64Content = base64String.split(",")[1];
+      resolve(base64Content);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+// Example usage:
+async function encodeAudio(audioBlob) {
+  try {
+    const base64Audio = await blobAudioToBase64(audioBlob);
+    console.log("b64 string", base64Audio); // Output the base64 encoded audio data
+    return base64Audio;
+  } catch (error) {
+    console.error("Error encoding audio blob:", error);
+    return null;
+  }
+}
+
+export const startNewChatFromAudio = async (
+  userId,
+  audioBlob,
+  updateChats,
+  setCurrentChatUid
+) => {
   const newChatDoc = await addDoc(collection(db, `users/${userId}/chats`), {
     time: Date.now(),
     name: "",
