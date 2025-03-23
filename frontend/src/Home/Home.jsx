@@ -240,7 +240,7 @@ const HomePage = () => {
 
       <section className="footer">
         <div className="footer-left">
-          © 2025 Placeholder. All rights reserved.
+          © 2025 Acento.ai . All rights reserved.
         </div>
         <div className="footer-right">
           <a href="#" className="footer-link">
