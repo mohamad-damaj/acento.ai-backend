@@ -1,0 +1,128 @@
+/* DashboardSidebar.css */
+
+.dashboard-sidebar {
+  width: 280px;
+  height: 100vh;
+  background-color: #282828;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  overflow: scroll;
+}
+
+.dashboard-sidebar.collapsed {
+  width: 60px; /* Collapsed width */
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.new-chat {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #3a3a3a;
+  cursor: pointer;
+}
+
+.new-chat-icon {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.sidebar-section {
+  padding: 20px;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.list-item.active {
+  background-color: #3a3a3a;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.list-icon {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.gem-icon {
+  font-size: 1.2rem;
+}
+
+.list-item.more {
+  justify-content: space-between;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  margin-top: auto;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.footer-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #f44336;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.location span {
+  margin-right: 5px;
+}
+
+.update-location {
+  color: #90caf9;
+  cursor: pointer;
+}

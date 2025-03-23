@@ -1,11 +1,11 @@
-import { useState } from "react";
 import "./App.css";
 import { useAuth } from "./services/AuthContext";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import HomePage from "./Home/Home";
+import Dashboard from "./Dashboard/Dashboard";
+import UserAuthenticate from "./UserAuthenticate/UserAuthenticate";
 
 function App() {
-  const [count, setCount] = useState(0);
   const { currentUser, loading } = useAuth();
 
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route
           path="/auth"
           element={
-            currentUser ? <Navigate to="/dashboard" /> : <div>hello</div>
+            currentUser ? <Navigate to="/dashboard" /> : <UserAuthenticate />
           }
         />
         <Route

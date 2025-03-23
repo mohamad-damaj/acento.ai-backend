@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./../index.css";
 import "./Home.css";
 import lines from "./../assets/lines.svg";
 import logo1 from "./../assets/logos/logo1.svg";
@@ -15,6 +16,7 @@ import logo11 from "./../assets/logos/logo11.svg";
 import logo12 from "./../assets/logos/logo12.svg";
 import arrow from "./../assets/arrow.svg";
 import { signIn } from "../services/auth";
+import { Link } from "react-router";
 
 const HomePage = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -71,14 +73,17 @@ const HomePage = () => {
           <a href="#" className="nav-link login">
             Login
           </a>
-          <button
-            className="signup-button"
-            onClick={() => {
-              signIn("abcd@gmail.com", "password");
-            }}
-          >
-            Sign Up
-          </button>
+          <Link to={"/auth"}>
+            <button
+              className="signup-button"
+              onClick={() => {
+                console.log("Signing in!");
+                signIn("abcd@gmail.com", "password");
+              }}
+            >
+              Sign Up
+            </button>
+          </Link>
         </div>
       </nav>
 
