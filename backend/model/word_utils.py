@@ -30,3 +30,7 @@ def wpm(text):
     return int(count(text)/extract(text))
 
 
+    
+
+
+

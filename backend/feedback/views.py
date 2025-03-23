@@ -3,6 +3,7 @@ from ..model.transcription import Transcriber
 from ..model.feedback import Gemini
 from ..model.smile import Smile
 from ..model.word_utils import wpm
+from ..model.pdf_reader import read_pdf
 import io
 
 # Create blueprint for endpoints
@@ -81,5 +82,45 @@ def vocal_feedback():
         "feedback": feedback
     }))
     return response, 200
+
+
+@bp.route("/resume", methods=["POST"])
+def resume_feedback():
+    if "resume" in request.files:
+        resume = request.files["resume"]
+        
+    else:
+        response = make_response(jsonify("failed to receive file"))
+        return response, 400 
     
+    if "job_description" in request.files:
+        job = request.files["job_description"]
+    else:
+        job = None
+
+    print(resume.filename)
+    resume.save("./file")
+    resume.close()
+
+    try:
+        text = read_pdf("./file")
+        
+
+    except Exception as e:
+        print("error:", e)
+        response = make_response(jsonify("failed to generate features"))
+        return response, 400
+    
+    try:
+        feedback = feedback_model.query_gemini_resume_feedback(text, job)
+        print(feedback)
+    except Exception as e:
+        response = make_response(jsonify("failed to generate feedback"))
+        return response, 400
+        pass
+
+    response = make_response(jsonify({
+        "feedback": feedback
+    }))
+    return response, 200
 
