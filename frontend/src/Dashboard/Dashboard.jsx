@@ -148,9 +148,24 @@ function Dashboard() {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    console.log(selectedFile);
   };
 
   async function sendAudio() {
+    if (selectedFile) {
+      // const audioBlob = new Blob(selectedFile, {
+      //   type: "audio/ogg;codecs=opus",
+      // });
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const blob = new Blob([new Uint8Array(e.target.result)], {
+          type: selectedFile.type,
+        });
+        startNewChatFromAudio(currentUser.uid, blob, updateChats);
+        return;
+      };
+      reader.readAsArrayBuffer(selectedFile);
+    }
     // TODO: change from mpeg?
     // if (selectedFile.type === "audio/mpeg") {
     //   await startNewChatFromAudio(currentUser.uid, selectedFile, updateChats);
