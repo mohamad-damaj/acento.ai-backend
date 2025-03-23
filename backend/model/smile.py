@@ -10,13 +10,13 @@ class Smile():
     def feature_extract(self, audio):
         features = self.smile.process_file(audio)
 
-        return features
+        return features, features["F0semitoneFrom27.5Hz_sma3nz"].std()
     
 
 
 if __name__ == "__main__":
 
     smiley = Smile()
-
-    print(smiley.feature_extract(r"testing\test.wav"))
+    features = smiley.feature_extract(r"testing\test.wav")
+    print(features["F0semitoneFrom27.5Hz_sma3nz"].std())
         
