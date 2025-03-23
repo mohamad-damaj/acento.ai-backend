@@ -23,7 +23,7 @@
 .logo-name {
   font-size: 2.5rem;
   margin-left: 16px;
-  font-family: "Anonymous Pro";
+  /* font-family: "Anonymous Pro"; */
 }
 
 .navbar-middle {
@@ -78,7 +78,7 @@
   line-height: 120%;
   color: #28272a;
   /* max-width: 60%; */
-  font-family: "Anonymous Pro";
+  /* font-family: "Anonymous Pro"; */
 }
 
 .hero-description {

@@ -1,4 +1,6 @@
-/* DashboardSidebar.css */
+.dashboard {
+  display: flex;
+}
 
 .dashboard-sidebar {
   width: 280px;
