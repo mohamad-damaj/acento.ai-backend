@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 64px 256px;
+  padding: 2em 4em;
   font-weight: bold;
 }
 
@@ -21,8 +21,9 @@
 }
 
 .logo-name {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-left: 16px;
+  font-family: "Anonymous Pro";
 }
 
 .navbar-middle {
@@ -32,7 +33,7 @@
 }
 
 .nav-link {
-  font-weight: bold;
+  font-weight: 300;
   margin-inline: 20px;
   text-decoration: none;
   color: #333;
@@ -41,22 +42,22 @@
 .signup-button {
   background-color: #bcaeec; /* Purple color */
   color: #070036;
-  padding: 16px 48px;
+  padding: 1em 2em;
   border: none;
   border-radius: 48px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 300;
 }
 
 .features-button {
   background: none;
-  padding: 16px 48px;
+  padding: 0.5em 2em;
   border: 2px solid #28272a;
   border-radius: 48px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .hero {
@@ -71,18 +72,19 @@
 }
 
 .hero-title {
-  font-size: 84px;
+  font-size: 5em;
   margin-bottom: 10px;
   margin-top: 0px;
   line-height: 120%;
   color: #28272a;
-  max-width: 60%;
+  /* max-width: 60%; */
+  font-family: "Anonymous Pro";
 }
 
 .hero-description {
-  font-size: 24px;
-  font-weight: bold;
-  color: #666;
+  font-size: 1em;
+  font-weight: 200;
+  /* color: #666; */
   margin-bottom: 30px;
   max-width: 60%;
   margin-left: auto;
