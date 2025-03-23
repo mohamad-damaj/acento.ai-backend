@@ -46,21 +46,56 @@ export const getUserMessages = async (userId, chatId) => {
   return result;
 };
 
-export const startNewChatFromAudio = async (userId, file, updateChats) => {
+async function blobAudioToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let base64String = reader.result;
+      // Remove the data URL prefix if you only want the base64 part
+      const base64Content = base64String.split(",")[1];
+      resolve(base64Content);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+// Example usage:
+async function encodeAudio(audioBlob) {
+  try {
+    const base64Audio = await blobAudioToBase64(audioBlob);
+    console.log("b64 string", base64Audio); // Output the base64 encoded audio data
+    return base64Audio;
+  } catch (error) {
+    console.error("Error encoding audio blob:", error);
+    return null;
+  }
+}
+
+export const startNewChatFromAudio = async (userId, audioBlob, updateChats) => {
   const newChatDoc = await addDoc(collection(db, `users/${userId}/chats`), {
     time: Date.now(),
     name: "",
   });
 
-  const newMessageDoc = await addDoc(
-    collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
-    {
-      time: Date.now(),
-      fromUser: false,
-      type: "audio",
-      content: "", // Parse audio file into base64 and add here as content
-    }
-  );
+  // const base64audio = encodeAudio(audioBlob);
+
+  var reader = new window.FileReader();
+  reader.readAsDataURL(audioBlob);
+  reader.onloadend = async function () {
+    var base64 = "";
+    base64 = reader.result;
+    base64 = base64.split(",")[1];
+    const newMessageDoc = await addDoc(
+      collection(db, `users/${userId}/chats/${newChatDoc.id}/messages`),
+      {
+        time: Date.now(),
+        fromUser: false,
+        type: "audio",
+        content: base64, // Parse audio file into base64 and add here as content
+      }
+    );
+  };
 
   // Update the ui by calling updateChats and then callign setCurrentChatUid
   await updateChats();
