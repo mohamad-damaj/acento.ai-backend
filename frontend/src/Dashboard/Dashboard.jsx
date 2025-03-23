@@ -162,9 +162,9 @@ function Dashboard() {
           type: selectedFile.type,
         });
         startNewChatFromAudio(currentUser.uid, blob, updateChats);
-        return;
       };
       reader.readAsArrayBuffer(selectedFile);
+      return;
     }
     // TODO: change from mpeg?
     // if (selectedFile.type === "audio/mpeg") {
