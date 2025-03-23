@@ -23,24 +23,28 @@ const HomePage = () => {
 
   const faqData = [
     {
-      question: "This is a simple question",
+      question: "How does the resume analysis work?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies enim eu vulputate consectetur. Nullam vitae tempus nisi, a dapibus.",
+        "Our platform lets you upload your resume and a target job description. It then checks the resume based on industry standard \
+        ensures your resume is ATS-friendly, and offers tailored suggestions to match the position's requirements.\
+        You'll receive clear, actionable feedback on how to reorganize your content, highlight relevant skills, and remove potential red flags.",
     },
     {
-      question: "This is a simple question",
+      question: "Can this tool help if my first language isn't English?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies enim eu vulputate consectetur. Nullam vitae tempus nisi, a dapibus.",
+        "Absolutely! Our audio and text analysis features are designed to help non-native English speakers refine their communication.\
+        We identify filler words, grammar issues, and unclear phrasing—then provide tips for improving clarity and tone.\
+        This guidance is especially helpful for immigrants who may need extra support navigating Western workplace expectations.",
     },
     {
-      question: "This is a simple question",
+      question: "What's the difference between Speech Analysis and Vocal Analysis?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies enim eu vulputate consectetur. Nullam vitae tempus nisi, a dapibus.",
+        "Speech Analysis focuses on what you say: It transcribes your spoken words, flags grammar errors, counts filler words, measures words per minute, and checks overall comprehensibility and structure. <br/><br/>Vocal Analysis looks at how you sound: It evaluates your tone, volume, and pitch so you can adjust for a more confident, engaging delivery.",
     },
     {
-      question: "This is a simple question",
+      question: "Is my data kept private and secure?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultricies enim eu vulputate consectetur. Nullam vitae tempus nisi, a dapibus.",
+        "Yes. We prioritize user confidentiality. Any resume or audio file you upload is processed securely, and we do not share your information with third parties. All feedback is generated solely to help you improve your employability and is not stored beyond your session unless you choose to save it for personal reference.",
     },
   ];
 
@@ -195,8 +199,8 @@ const HomePage = () => {
         <div className="faq-left">
           <h2 className="faq-title">Popular Questions</h2>
           <p className="faq-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ligula
-            neque, feugiat eu malesuada elementum.
+          Not seeing your question here? Check out our Help Center for more detailed articles, 
+          or reach out to our support team at support@yourdomain.com. We're here to help you get the most out of our platform!
           </p>
         </div>
 
@@ -214,10 +218,13 @@ const HomePage = () => {
                   <img src={arrow} alt="Arrow" />
                 </span>
               </div>
-              <div
-                className={`faq-answer ${openIndex === index ? "open" : ""}`}
-              >
-                {item.answer}
+              <div className={`faq-answer ${openIndex === index ? "open" : ""}`}>
+                {item.answer.split("<br/>").map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                ))}
               </div>
             </div>
           ))}
