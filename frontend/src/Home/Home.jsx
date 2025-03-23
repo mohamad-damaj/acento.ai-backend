@@ -93,8 +93,7 @@ const HomePage = () => {
           Articulate Your Voice. <br></br>Empower Your Future.
           </h1>
           <p className="hero-description">
-            Ascend in your public speaking abilities and ace your next interview
-            with Acento.ai
+          Enhance your speech, polish your resume, and conquer your next interview with Acento.ai
           </p>
           <div className="hero-buttons">
             <button className="signup-button">Sign Up</button>
@@ -168,15 +167,16 @@ const HomePage = () => {
           <div className="feature-card">
             <div className="feature-icon"></div> {/* Placeholder for icon */}
             <h3 className="feature-title">Speech Analysis</h3>
-            <p className="feature-text">Based on yo</p>
+            <p className="feature-text">Assess your interview performance by examining transcription accuracy, filler word frequency,
+               words-per-minute, grammar, and content structure to ensure clear communication.</p>
           </div>
 
           <div className="feature-card">
             <div className="feature-icon"></div> {/* Placeholder for icon */}
             <h3 className="feature-title">Vocal Analysis</h3>
             <p className="feature-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              ligula neque, feugiat eu malesuada elementum.
+            Evaluate tone, pitch, and volume to help you deliver a confident 
+            and engaging verbal presence during interviews and presentations.
             </p>
           </div>
 
@@ -184,8 +184,8 @@ const HomePage = () => {
             <div className="feature-icon"></div> {/* Placeholder for icon */}
             <h3 className="feature-title">Resume Analysis</h3>
             <p className="feature-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              ligula neque, feugiat eu malesuada elementum.
+            Compare your resume against job descriptions for ATS compatibility and cultural appropriateness, 
+            offering tailored feedback to maximize relevance and impact.
             </p>
           </div>
         </div>
@@ -226,10 +226,9 @@ const HomePage = () => {
 
       <section className="cta-section">
         <div className="cta">
-          <h3 className="cta-title">This is a really cool title</h3>
+          <h3 className="cta-title">Empower Your Career. </h3>
           <p className="cta-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ligula
-            neque, feugiat eu malesuada elementum.
+          Refine your resume, master interview skills, and navigate cultural norms—our AI-driven platform guides you ever
           </p>
           <div className="hero-buttons">
             <button className="signup-button">Sign Up</button>

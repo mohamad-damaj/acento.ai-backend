@@ -47,7 +47,7 @@ class Gemini:
                 6. Comment on the content structure and how well it is
                 7. End with an overall recommendation or conclusion in one or two sentences.
                 Reference any timestamp using []
-            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"filler_words":"<filler words information>", "grammar": "<grammar information>", ...\}}
+            ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING FORMAT: {{"Filler_words":"<filler words information>", "Grammar": "<grammar information>", ...\}}
                     """
 
         response = self.model.generate_content(input_index)
