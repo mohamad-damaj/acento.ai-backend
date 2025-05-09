@@ -23,6 +23,7 @@ import Logo from "../components/Logo";
 
 const HomePage = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const faqData = [
     {
@@ -52,8 +53,25 @@ const HomePage = () => {
     },
   ];
 
+  const linksData = [
+    { name: "Features", route: "#features" },
+    { name: "FAQ", route: "#faq" },
+  ];
+
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleToggleDrawer = () => {
+    setDrawerOpen((val) => !val);
+  };
+
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
+
+  const openDrawer = () => {
+    setDrawerOpen(true);
   };
 
   return (
@@ -103,6 +121,7 @@ const HomePage = () => {
           strokeWidth={1.5}
           stroke="black"
           className="size-6"
+          onClick={handleToggleDrawer}
         >
           <path
             strokeLinecap="round"
@@ -110,7 +129,87 @@ const HomePage = () => {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
+        <div
+          className={`flex px-8 py-6 max-md:flex-col max-md:fixed max-md:z-2 max-md:inset-0 max-md:left-[15%] max-md:bg-white transition-all ${
+            drawerOpen ? "" : "translate-x-[100%]"
+          }`}
+        >
+          <div className="ml-auto mr-0">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="black"
+              className="size-6"
+              onClick={handleToggleDrawer}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <ul className="my-16">
+            {linksData.map((linkItem) => {
+              return (
+                <li className="mb-2">
+                  <a href={linkItem.route}>
+                    <p className="text-lg">{linkItem.name}</p>
+                  </a>
+                </li>
+              );
+            })}
+            <Link to={"/auth"}>
+              <button
+                type="button"
+                className="signup-button mt-8"
+                onClick={() => {
+                  console.log("Signing in!");
+                  signIn("abcd@gmail.com", "password");
+                }}
+              >
+                <p className="text-white font-bold">Sign Up</p>
+              </button>
+            </Link>
+          </ul>
+        </div>
       </section>
+
+      {/* <section>
+        <div
+          className={`${
+            drawerOpen ? "" : "translate-x-[100%]"
+          } fixed z-2 bg-white inset-[0% 0% 15% 0]
+          transition ease-in-out duration-300`}
+        >
+          <div className="w-screen py-6 flex items-center justify-between px-8">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="black"
+              className="size-6"
+              onClick={handleToggleDrawer}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          {linksData.map((linkItem) => {
+            return (
+              <a onClick={() => (window.location.href = "#features")}>
+                <p>{linkItem.name}</p>
+              </a>
+            );
+          })}
+        </div>
+      </section> */}
 
       {/* <section className="hero">
         <div className="hero-content">
@@ -325,7 +424,7 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section className="mx-8 my-20">
+      <section id="faq" className="mx-8 my-20">
         <div className="mb-12">
           <h2 className="text-4xl font-regular text-[#28272a] mb-4">
             Popular Questions

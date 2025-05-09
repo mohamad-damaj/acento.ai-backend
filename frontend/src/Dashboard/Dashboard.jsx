@@ -292,7 +292,7 @@ function Dashboard() {
 
   return (
     <>
-      <section className="w-screen py-6 px-8">
+      <section className="w-screen py-6 px-8 flex items-center justify-left">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -300,6 +300,7 @@ function Dashboard() {
           strokeWidth={1.5}
           stroke="black"
           className="size-6"
+          onClick={toggleSidebar}
         >
           <path
             strokeLinecap="round"
@@ -307,6 +308,7 @@ function Dashboard() {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
+        <h1 className="text-xl ml-4 md:hidden">Chats</h1>
       </section>
       {chats ? <div></div> : <p>Loading</p>}
       <button
