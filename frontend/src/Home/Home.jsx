@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./../index.css";
 import "./Home.css";
-import lines from "./../assets/lines.svg";
+// import lines from "./../assets/lines.svg";
+import "./Lines";
 import logo1 from "./../assets/logos/logo1.svg";
 import logo2 from "./../assets/logos/logo2.svg";
 import logo3 from "./../assets/logos/logo3.svg";
@@ -17,6 +18,7 @@ import logo12 from "./../assets/logos/logo12.svg";
 import arrow from "./../assets/arrow.svg";
 import { signIn } from "../services/auth";
 import { Link } from "react-router";
+import Lines from "./Lines";
 
 const HomePage = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -37,7 +39,8 @@ const HomePage = () => {
         This guidance is especially helpful for immigrants who may need extra support navigating Western workplace expectations.",
     },
     {
-      question: "What's the difference between Speech Analysis and Vocal Analysis?",
+      question:
+        "What's the difference between Speech Analysis and Vocal Analysis?",
       answer:
         "Speech Analysis focuses on what you say: It transcribes your spoken words, flags grammar errors, counts filler words, measures words per minute, and checks overall comprehensibility and structure. <br/><br/>Vocal Analysis looks at how you sound: It evaluates your tone, volume, and pitch so you can adjust for a more confident, engaging delivery.",
     },
@@ -54,9 +57,8 @@ const HomePage = () => {
 
   return (
     <>
-      <nav className="navbar">
+      {/* <nav className="navbar">
         <div className="navbar-left">
-          {/* <div className="logo-icon"></div> */}
           <span className="logo-name">Acento.ai</span>
         </div>
         <div className="navbar-middle">
@@ -78,7 +80,7 @@ const HomePage = () => {
             Login
           </a>
           <Link to={"/auth"}>
-            <button
+            <button type="button"
               className="signup-button"
               onClick={() => {
                 console.log("Signing in!");
@@ -89,32 +91,86 @@ const HomePage = () => {
             </button>
           </Link>
         </div>
-      </nav>
+      </nav> */}
 
-      <section className="hero">
+      <section className="w-screen py-6 flex items-center justify-between px-8">
+        <img src="/src/assets/logo.svg" alt="Logo" className="h-8" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="black"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </section>
+
+      {/* <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-          Articulate Your Voice. <br></br>Empower Your Future.
+            Articulate Your Voice. <br></br>Empower Your Future.
           </h1>
           <p className="hero-description">
-          Enhance your speech, polish your resume, and conquer your next interview with Acento.ai
+            Enhance your speech, polish your resume, and conquer your next
+            interview with Acento.ai
           </p>
           <div className="hero-buttons">
-            <button className="signup-button">Sign Up</button>
-            <button
+            <button type="button" className="signup-button">Sign Up</button>
+            <button type="button"
               onClick={() => (window.location.href = "#features")}
               className="features-button"
             >
               Features
             </button>
           </div>
-          {/* <p className="no-credit-card">no credit card required</p> */}
           <img src={lines} alt="Lines" className="lines-svg" />
         </div>
+      </section> */}
+
+      <section className="flex flex-col items-center mx-8 mt-4 overflow-hidden relative">
+        <h1 className="text-[2.5rem]/[2.75rem] text-center font-semibold">
+          <span className="text-[#070036]">Articulate your voice.</span>
+          <span className="text-[#5d5c61]"> Empower your future.</span>
+        </h1>
+        <p className="text-center mt-6 text-lg">
+          Enhance your speech, polish your resume, and conquer your next
+          interview with Acento.ai.
+        </p>
+        <img src="/src/assets/lines.svg" className="opacity-40 -mx-8 my-10" />
+        <div className="">
+          <Link to={"/dashboard"}>
+            <button
+              type="button"
+              className="bg-[#bcaeec] color-white px-6 py-3 rounded-full mr-8"
+            >
+              Sign Up
+            </button>
+          </Link>
+          <button
+            type="button"
+            onClick={() => (window.location.href = "#features")}
+          >
+            Features
+          </button>
+        </div>
+        {/* <p className="no-credit-card">no credit card required</p> */}
+        {/* <img
+          src={lines}
+          alt="Lines"
+          className="absolute -z-1 left-0 right-0 size-400"
+        /> */}
+        {/* <Lines className="absolute left-0 right-0 top-1/2 overflow-hidden -z-1 bg-clip-content w-screen h-screen" /> */}
+        {/* <Lines className="absolute left-0 right-0 top-1/2 -z-1 w-[200vw] h-auto " /> */}
       </section>
 
-      <section className="teaser-section">
-        <div className="teaser" />
+      <section className="mx-8 mt-12">
+        <div className="bg-gray-400 w-full aspect-video rounded-2xl" />
       </section>
 
       {/* <section className="businesses-section">
@@ -159,66 +215,149 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section className="features-section">
-        <div className="section-description">
-          <span className="highlighted">
-          Speak with clarity.
+      <section id="features" className="flex flex-col mx-8 my-20">
+        <div className="text-4xl font-regular font-heading text-[#5d5c61] mb-8">
+          <span className="text-[#070036]">Speak with clarity.</span>
+          <span>
+            {" "}
+            Let our AI refine your voice and elevate your confidence.
           </span>
-          <span> Let our AI refine your voice and elevate your confidence.</span>
+        </div>
+
+        <div className=" flex flex-col gap-4">
+          {[
+            {
+              title: "Speech Analysis",
+              description:
+                "Assess your interview performance by examining transcription accuracy, filler word frequency, words-per-minute, grammar, and content structure to ensure clear communication.",
+              icon: (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
+                />
+              ),
+            },
+            {
+              title: "Vocal Analysis",
+              description:
+                "Evaluate tone, pitch, and volume to help you deliver a confident and engaging verbal presence during interviews and presentations.",
+              icon: (
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                />
+              ),
+            },
+            {
+              title: "Resume Analysis",
+              description:
+                "Compare your resume against job descriptions for ATS compatibility and cultural appropriateness, offering tailored feedback to maximize relevance and impact.",
+              icon: (
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                />
+              ),
+            },
+          ].map((card) => {
+            return (
+              <div className="bg-white py-12 px-8 rounded-4xl">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-16"
+                >
+                  {card.icon}
+                </svg>
+                <h1 className="text-4xl mt-8">{card.title}</h1>
+                <p className="text-[#666] mt-4">{card.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* <section className="features-section">
+        <div className="section-description">
+          <span className="highlighted">Speak with clarity.</span>
+          <span>
+            {" "}
+            Let our AI refine your voice and elevate your confidence.
+          </span>
         </div>
 
         <div id="features" className="feature-cards">
           <div className="feature-card">
-            <div className="feature-icon"></div> {/* Placeholder for icon */}
+            <div className="feature-icon"></div>
             <h3 className="feature-title">Speech Analysis</h3>
-            <p className="feature-text">Assess your interview performance by examining transcription accuracy, filler word frequency,
-               words-per-minute, grammar, and content structure to ensure clear communication.</p>
-          </div>
-
-          <div className="feature-card">
-            <div className="feature-icon"></div> {/* Placeholder for icon */}
-            <h3 className="feature-title">Vocal Analysis</h3>
             <p className="feature-text">
-            Evaluate tone, pitch, and volume to help you deliver a confident 
-            and engaging verbal presence during interviews and presentations.
+              Assess your interview performance by examining transcription
+              accuracy, filler word frequency, words-per-minute, grammar, and
+              content structure to ensure clear communication.
             </p>
           </div>
 
           <div className="feature-card">
-            <div className="feature-icon"></div> {/* Placeholder for icon */}
+            <div className="feature-icon"></div>
+            <h3 className="feature-title">Vocal Analysis</h3>
+            <p className="feature-text">
+              Evaluate tone, pitch, and volume to help you deliver a confident
+              and engaging verbal presence during interviews and presentations.
+            </p>
+          </div>
+
+          <div className="feature-card">
+            <div className="feature-icon"></div>
             <h3 className="feature-title">Resume Analysis</h3>
             <p className="feature-text">
-            Compare your resume against job descriptions for ATS compatibility and cultural appropriateness, 
-            offering tailored feedback to maximize relevance and impact.
+              Compare your resume against job descriptions for ATS compatibility
+              and cultural appropriateness, offering tailored feedback to
+              maximize relevance and impact.
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="faq-section">
-        <div className="faq-left">
-          <h2 className="faq-title">Popular Questions</h2>
-          <p className="faq-subtitle">
-          Not seeing your question here? Check out our Help Center for more detailed articles, 
-          or reach out to our support team at support@yourdomain.com. We're here to help you get the most out of our platform!
+      <section className="mx-8 my-20">
+        <div className="mb-12">
+          <h2 className="text-4xl font-regular text-[#28272a] mb-4">
+            Popular Questions
+          </h2>
+          <p className="text-[#666]">
+            Not seeing your question here? Check out our Help Center for more
+            detailed articles, or reach out to our support team at
+            support@yourdomain.com. We're here to help you get the most out of
+            our platform!
           </p>
         </div>
 
-        <div className="faq-right">
+        <div className="flex flex-col gap-4">
           {faqData.map((item, index) => (
-            <div className="faq-item" key={index}>
+            <div className="rounded-2xl border-2 p-4" key={index}>
               <div
-                className="faq-question"
+                className="flex justify-between items-center cursor-pointer color-[#070036] text-xl"
                 onClick={() => toggleAccordion(index)}
               >
-                {item.question}
+                <span className="max-w-[90%]">{item.question}</span>
                 <span
-                  className={`faq-arrow ${openIndex === index ? "open" : ""}`}
+                  className={`transition ${
+                    openIndex === index ? "-rotate-180" : ""
+                  }`}
                 >
-                  <img src={arrow} alt="Arrow" />
+                  <img src={arrow} alt="Arrow" className="size-4" />
                 </span>
               </div>
-              <div className={`faq-answer ${openIndex === index ? "open" : ""}`}>
+              <div
+                className={`text-[#555] max-h-0 overflow-hidden transition-all duration-300 ease-linear ${
+                  openIndex === index ? " max-h-72 mt-4" : ""
+                }`}
+              >
                 {item.answer.split("<br/>").map((line, i) => (
                   <span key={i}>
                     {line}
@@ -231,20 +370,44 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="cta-section">
+      <section
+        className="flex flex-col items-center text-center mx-8 mb-8 px-4 py-8 rounded-4xl bg-center bg-cover
+      bg-[url(/src/assets/cta-image.webp)]"
+      >
+        <h3 className="text-4xl">Empower Your Career. </h3>
+        <p className="text-[#5d5c61] mt-4 mb-8 px-2">
+          Refine your resume, master interview skills, and navigate cultural
+          norms—our AI-driven platform guides you ever
+        </p>
+        <button
+          type="button"
+          className="bg-[#bcaeec] color-white px-6 py-3 rounded-full"
+        >
+          Sign Up
+        </button>
+      </section>
+
+      {/* <section className="cta-section">
         <div className="cta">
           <h3 className="cta-title">Empower Your Career. </h3>
           <p className="cta-subtitle">
-          Refine your resume, master interview skills, and navigate cultural norms—our AI-driven platform guides you ever
+            Refine your resume, master interview skills, and navigate cultural
+            norms—our AI-driven platform guides you ever
           </p>
           <div className="hero-buttons">
-            <button className="signup-button">Sign Up</button>
-            <button className="features-button">Features</button>
+            <button type="button" className="signup-button">Sign Up</button>
+            <button type="button" className="features-button">Features</button>
           </div>
         </div>
+      </section> */}
+
+      <section className="w-screen py-6 flex items-center justify-center">
+        <span className="text-[#666] text-sm">
+          © 2025 Acento.ai. All rights reserved.
+        </span>
       </section>
 
-      <section className="footer">
+      {/* <section className="footer">
         <div className="footer-left">
           © 2025 Acento.ai . All rights reserved.
         </div>
@@ -262,7 +425,7 @@ const HomePage = () => {
             Also This
           </a>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };
