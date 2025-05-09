@@ -165,10 +165,10 @@ const HomePage = () => {
               <button
                 type="button"
                 className="signup-button mt-8"
-                onClick={() => {
-                  console.log("Signing in!");
-                  signIn("abcd@gmail.com", "password");
-                }}
+                // onClick={() => {
+                //   console.log("Signing in!");
+                //   signIn("abcd@gmail.com", "password");
+                // }}
               >
                 <p className="text-white font-bold">Sign Up</p>
               </button>

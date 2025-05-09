@@ -220,7 +220,7 @@ function Dashboard() {
 
   // will make request to flask backend
 
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [chats, setChats] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
   const [currentChatUid, setCurrentChatUid] = useState("");
@@ -287,7 +287,7 @@ function Dashboard() {
   }, [currentChatUid, currentUser.uid]);
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+    setIsCollapsed((val) => !val);
   };
 
   return (
@@ -309,6 +309,29 @@ function Dashboard() {
           />
         </svg>
         <h1 className="text-xl ml-4 md:hidden">Chats</h1>
+        <nav
+          className={`bg-white fixed inset-0 right-[15%] max-w-[24rem] transition-all ${
+            isCollapsed ? "translate-x-[-100%]" : ""
+          }`}
+        >
+          <div className="w-full py-6 px-8 flex items-center justify-left">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="black"
+              className="size-6"
+              onClick={toggleSidebar}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        </nav>
       </section>
       {chats ? <div></div> : <p>Loading</p>}
       <button
