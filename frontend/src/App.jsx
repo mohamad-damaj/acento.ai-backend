@@ -14,7 +14,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route
           path="/auth"
           element={
@@ -26,8 +25,9 @@ function App() {
           element={currentUser ? <Dashboard /> : <Navigate to="/auth" />}
         />
         <Route path="/testing" element={<Test />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        {/* <Route path="/login" element={<LogIn />} /> */}
+        {/* <Route path="/sign-up" element={<SignUp />} /> */}
+        <Route path="/" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

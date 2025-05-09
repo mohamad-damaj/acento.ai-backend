@@ -263,9 +263,9 @@ const HomePage = () => {
                 />
               ),
             },
-          ].map((card) => {
+          ].map((card, index) => {
             return (
-              <div className="bg-white py-12 px-8 rounded-4xl">
+              <div key={index} className="bg-white py-12 px-8 rounded-4xl">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
