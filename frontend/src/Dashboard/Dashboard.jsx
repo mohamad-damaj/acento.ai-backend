@@ -9,6 +9,8 @@ import {
 } from "../services/firestore";
 import { useAuth } from "../services/AuthContext";
 import DashboardChat from "../DashboardChat/DashboardChat";
+import { signOut } from "firebase/auth";
+import { auth } from "../services/firebase";
 
 function Dashboard() {
   const constraints = { audio: true };
@@ -217,10 +219,6 @@ function Dashboard() {
   //   }
 
   // will make request to flask backend
-  
-
-  
-
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [chats, setChats] = useState(null);
@@ -242,7 +240,6 @@ function Dashboard() {
         const blob = new Blob([new Uint8Array(e.target.result)], {
           type: selectedFile.type,
         });
-        
 
         await startNewChatFromAudio(
           currentUser.uid,
@@ -294,6 +291,35 @@ function Dashboard() {
   };
 
   return (
+    <>
+      <section className="w-screen py-6 px-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="black"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </section>
+      {chats ? <div></div> : <p>Loading</p>}
+      <button
+        onClick={() => {
+          signOut(auth);
+        }}
+      >
+        Logout
+      </button>
+    </>
+  );
+
+  return (
     <div className="dashboard">
       <aside className={`dashboard-sidebar ${isCollapsed ? "collapsed" : ""}`}>
         <div className="sidebar-header">
@@ -330,6 +356,13 @@ function Dashboard() {
         ) : (
           <div>Loading</div>
         )}
+        <button
+          onClick={() => {
+            signOut(auth);
+          }}
+        >
+          Logout
+        </button>
       </aside>
 
       <div className="dashboard-main">

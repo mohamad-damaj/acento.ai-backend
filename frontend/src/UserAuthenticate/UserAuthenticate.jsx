@@ -1,15 +1,18 @@
 // import { GalleryVerticalEnd } from "lucide-react";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Logo from "../components/Logo";
 import { Button } from "../components/shadcn/Button";
 import { Input } from "../components/shadcn/Input";
 import { Label } from "../components/shadcn/Label";
-import { signIn, signOut, signUp } from "../services/auth";
+import { signIn, signUp } from "../services/auth";
 
 export default function UserAuthenticate() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2 bg-white">
@@ -29,33 +32,53 @@ export default function UserAuthenticate() {
               <div className="grid gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input
+                  {/* <Input
                     id="email"
                     type="email"
                     placeholder="example@mail.com"
-                    ref={emailRef}
                     required
+                    ref={emailRef}
+                    /> */}
+                  <input
+                    type="email"
+                    placeholder="example@mail.com"
+                    required
+                    className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    ref={emailRef}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
-                  <Input
+                  {/* <Input
                     id="password"
                     type="password"
                     required
                     ref={passwordRef}
+                  /> */}
+                  <input
+                    type="password"
+                    placeholder=""
+                    required
+                    className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    ref={emailRef}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </div>
-                <Button
-                  type="submit"
-                  onSubmit={(e) => {
+                <button
+                  className="bg-[#bcaeec] text-black h-10 rounded-full px-8s"
+                  type="button"
+                  onClick={(e) => {
                     e.preventDefault();
-                    console.log("Workign!");
-                    signUp(emailRef.current, passwordRef.current);
+                    signIn(email, password);
                   }}
                 >
                   Login
-                </Button>
+                </button>
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
