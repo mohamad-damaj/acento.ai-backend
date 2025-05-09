@@ -19,6 +19,7 @@ import arrow from "./../assets/arrow.svg";
 import { signIn } from "../services/auth";
 import { Link } from "react-router";
 import Lines from "./Lines";
+import Logo from "../components/Logo";
 
 const HomePage = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -94,7 +95,7 @@ const HomePage = () => {
       </nav> */}
 
       <section className="w-screen py-6 flex items-center justify-between px-8">
-        <img src="/src/assets/logo.svg" alt="Logo" className="h-8" />
+        <Logo />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -144,7 +145,7 @@ const HomePage = () => {
         </p>
         <img src="/src/assets/lines.svg" className="opacity-40 -mx-8 my-10" />
         <div className="">
-          <Link to={"/dashboard"}>
+          <Link to={"/auth"}>
             <button
               type="button"
               className="bg-[#bcaeec] color-white px-6 py-3 rounded-full mr-8"
