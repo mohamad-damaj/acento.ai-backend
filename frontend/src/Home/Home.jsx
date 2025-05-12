@@ -112,7 +112,7 @@ const HomePage = () => {
         </div>
       </nav> */}
 
-      <section className="w-screen py-6 flex items-center justify-between px-8">
+      <section className="flex items-center justify-between p-6 lg:mx-16 ">
         <Logo />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@ const HomePage = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="black"
-          className="size-6"
+          className="size-6 md:hidden"
           onClick={handleToggleDrawer}
         >
           <path
@@ -130,7 +130,7 @@ const HomePage = () => {
           />
         </svg>
         <div
-          className={`flex px-8 py-6 max-md:flex-col max-md:fixed max-md:z-2 max-md:inset-0 max-md:left-[15%] max-md:bg-white transition-all ${
+          className={`hidden max-md:flex px-8 py-6 max-md:flex-col max-md:fixed max-md:z-2 max-md:inset-0 max-md:left-[15%] max-md:bg-white transition-all ${
             drawerOpen ? "" : "translate-x-[100%]"
           }`}
         >
@@ -165,6 +165,31 @@ const HomePage = () => {
               <button
                 type="button"
                 className="signup-button mt-8"
+                // onClick={() => {
+                //   console.log("Signing in!");
+                //   signIn("abcd@gmail.com", "password");
+                // }}
+              >
+                <p className="text-white font-bold">Sign Up</p>
+              </button>
+            </Link>
+          </ul>
+        </div>
+        <div className="max-md:hidden items-center justify-center">
+          <ul className="[&>*]:mx-8 inline-flex">
+            {linksData.map((linkItem) => {
+              return (
+                <li className="text-center my-auto">
+                  <a href={linkItem.route} className="">
+                    <p className="text-lg">{linkItem.name}</p>
+                  </a>
+                </li>
+              );
+            })}
+            <Link to={"/auth"}>
+              <button
+                type="button"
+                className="signup-button"
                 // onClick={() => {
                 //   console.log("Signing in!");
                 //   signIn("abcd@gmail.com", "password");
@@ -233,7 +258,7 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section className="flex flex-col items-center mx-8 mt-4 overflow-hidden relative">
+      <section className="flex flex-col items-center mx-8 mt-4 overflow-hidden relative lg:hidden">
         <h1 className="text-[2.5rem]/[2.75rem] text-center font-semibold">
           <span className="text-[#070036]">Articulate your voice.</span>
           <span className="text-[#5d5c61]"> Empower your future.</span>
@@ -242,7 +267,10 @@ const HomePage = () => {
           Enhance your speech, polish your resume, and conquer your next
           interview with Acento.ai.
         </p>
-        <img src="/src/assets/lines.svg" className="opacity-40 -mx-8 my-10" />
+        <img
+          src="/src/assets/lines.svg"
+          className="opacity-40 -mx-8 my-10 animate-oscillate"
+        />
         <div className="">
           <Link to={"/auth"}>
             <button
@@ -259,64 +287,49 @@ const HomePage = () => {
             Features
           </button>
         </div>
-        {/* <p className="no-credit-card">no credit card required</p> */}
-        {/* <img
-          src={lines}
-          alt="Lines"
-          className="absolute -z-1 left-0 right-0 size-400"
-        /> */}
-        {/* <Lines className="absolute left-0 right-0 top-1/2 overflow-hidden -z-1 bg-clip-content w-screen h-screen" /> */}
-        {/* <Lines className="absolute left-0 right-0 top-1/2 -z-1 w-[200vw] h-auto " /> */}
       </section>
 
-      <section className="mx-8 mt-12">
+      <section className="lg:grid-cols-2 hidden lg:grid mt-8 py-16">
+        <div className="flex flex-col gap-4 p-6 md:p-16 justify-start items-center">
+          <h1 className="text-6xl xl:text-7xl leading-none text-center font-semibold">
+            <span className="text-[#070036]">Articulate your voice.</span>
+            <span className="text-[#5d5c61]"> Empower your future.</span>
+          </h1>
+          <p className="text-center mt-6 text-lg">
+            Enhance your speech, polish your resume, and conquer your next
+            interview with Acento.ai. Enhance your speech, polish your resume,
+            and conquer your next interview with Acento.ai. Enhance your speech,
+            polish your resume, and conquer your next interview with Acento.ai.
+          </p>
+          <div className="mt-16">
+            <Link to={"/auth"}>
+              <button
+                type="button"
+                className="bg-[#bcaeec] color-white px-6 py-3 rounded-full mr-8"
+              >
+                Sign Up
+              </button>
+            </Link>
+            <button
+              type="button"
+              onClick={() => (window.location.href = "#features")}
+            >
+              Features
+            </button>
+          </div>
+        </div>
+        <img
+          src="/src/assets/lines.svg"
+          className="w-full h-full max-w-[60%] max-h-[60%] m-auto opacity-40 animate-oscillate"
+        />
+      </section>
+
+      <section className="mx-8 mt-12 lg:max-w-[60rem] lg:mx-auto">
         <div className="bg-gray-400 w-full aspect-video rounded-2xl" />
       </section>
 
-      {/* <section className="businesses-section">
-        <h2 className="section-title">Businesses we've landed</h2>
-        <div className="logo-grid">
-          <div className="logo-item">
-            <img src={logo1} alt="Logo 1" />
-          </div>
-          <div className="logo-item">
-            <img src={logo2} alt="Logo 2" />
-          </div>
-          <div className="logo-item">
-            <img src={logo3} alt="Logo 3" />
-          </div>
-          <div className="logo-item">
-            <img src={logo4} alt="Logo 4" />
-          </div>
-          <div className="logo-item">
-            <img src={logo5} alt="Logo 5" />
-          </div>
-          <div className="logo-item">
-            <img src={logo6} alt="Logo 6" />
-          </div>
-          <div className="logo-item">
-            <img src={logo7} alt="Logo 1" />
-          </div>
-          <div className="logo-item">
-            <img src={logo8} alt="Logo 2" />
-          </div>
-          <div className="logo-item">
-            <img src={logo9} alt="Logo 3" />
-          </div>
-          <div className="logo-item">
-            <img src={logo10} alt="Logo 4" />
-          </div>
-          <div className="logo-item">
-            <img src={logo11} alt="Logo 5" />
-          </div>
-          <div className="logo-item">
-            <img src={logo12} alt="Logo 6" />
-          </div>
-        </div>
-      </section> */}
-
-      <section id="features" className="flex flex-col mx-8 my-20">
-        <div className="text-4xl font-regular font-heading text-[#5d5c61] mb-8">
+      <section id="features" className="flex flex-col mx-8 my-20 lg:mx-16">
+        <div className="text-4xl font-regular font-heading text-[#5d5c61] mb-8 lg:text-right lg:text-5xl lg:font-semibold lg:max-w-[48rem] lg:ml-auto">
           <span className="text-[#070036]">Speak with clarity.</span>
           <span>
             {" "}
@@ -324,7 +337,7 @@ const HomePage = () => {
           </span>
         </div>
 
-        <div className=" flex flex-col gap-4">
+        <div className=" flex flex-col gap-8 lg:grid lg:grid-cols-3 lg:my-4">
           {[
             {
               title: "Speech Analysis",
@@ -371,12 +384,16 @@ const HomePage = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="size-16"
+                  class="size-16 lg:size-20"
                 >
                   {card.icon}
                 </svg>
-                <h1 className="text-4xl mt-8">{card.title}</h1>
-                <p className="text-[#666] mt-4">{card.description}</p>
+                <h1 className="text-4xl mt-8 lg:text-5xl lg:mt-16">
+                  {card.title}
+                </h1>
+                <p className="text-[#666] mt-4 lg:text-lg">
+                  {card.description}
+                </p>
               </div>
             );
           })}
@@ -424,9 +441,9 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section id="faq" className="mx-8 my-20">
+      <section id="faq" className="mx-8 my-20 gap-12 lg:mx-16 lg:flex">
         <div className="mb-12">
-          <h2 className="text-4xl font-regular text-[#28272a] mb-4">
+          <h2 className="text-4xl font-regular text-[#070036] mb-4 lg:text-5xl lg:font-semibold">
             Popular Questions
           </h2>
           <p className="text-[#666]">
@@ -471,7 +488,7 @@ const HomePage = () => {
       </section>
 
       <section
-        className="flex flex-col items-center text-center mx-8 mb-8 px-4 py-8 rounded-4xl bg-center bg-cover
+        className="flex flex-col items-center text-center mx-8 my-8 mb-8 px-4 py-8 lg:max-w-[60rem] lg:mx-auto rounded-4xl bg-center bg-cover
       bg-[url(/src/assets/cta-image.webp)]"
       >
         <h3 className="text-4xl">Empower Your Career. </h3>
@@ -501,10 +518,35 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section className="w-screen py-6 flex items-center justify-center">
-        <span className="text-[#666] text-sm">
+      <section className="w-screen py-6 lg:px-16 flex items-center justify-center lg:justify-between">
+        <span className="text-[#666] text-sm lg:text-lg">
           © 2025 Acento.ai. All rights reserved.
         </span>
+        <div className="hidden lg:flex">
+          <ul className="[&>*]:mx-8 inline-flex">
+            {linksData.map((linkItem) => {
+              return (
+                <li className="text-center my-auto">
+                  <a href={linkItem.route} className="">
+                    <p className="text-lg">{linkItem.name}</p>
+                  </a>
+                </li>
+              );
+            })}
+            <Link to={"/auth"}>
+              <button
+                type="button"
+                className="signup-button"
+                // onClick={() => {
+                //   console.log("Signing in!");
+                //   signIn("abcd@gmail.com", "password");
+                // }}
+              >
+                <p className="text-white font-bold">Sign Up</p>
+              </button>
+            </Link>
+          </ul>
+        </div>
       </section>
 
       {/* <section className="footer">

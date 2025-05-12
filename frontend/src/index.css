@@ -8,6 +8,18 @@
   /* --font-heading: "Cascadia Code", monospace; */
   --font-heading: "Rubik", monospace;
   --font-body: sans-serif;
+
+  --animate-oscillate: oscillate 5s ease-in-out infinite;
+
+  @keyframes oscillate {
+    0%,
+    100% {
+      transform: translateY(-5%);
+    }
+    50% {
+      transform: translateY(5%);
+    }
+  }
 }
 
 html {

@@ -15,7 +15,7 @@ export default function UserAuthenticate() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-2 bg-white">
+    <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <Logo />
@@ -43,7 +43,8 @@ export default function UserAuthenticate() {
                     type="email"
                     placeholder="example@mail.com"
                     required
-                    className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    // className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    className="bg-white flex h-9 px-3 py-1 text-base rounded-xl outline-none md:text-sm"
                     ref={emailRef}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -60,9 +61,10 @@ export default function UserAuthenticate() {
                   /> */}
                   <input
                     type="password"
-                    placeholder=""
+                    placeholder="Top secret password"
                     required
-                    className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    // className={`flex h-9 w-full rounded-full border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm`}
+                    className="bg-white flex h-9 px-3 py-1 text-base rounded-xl outline-none md:text-sm"
                     ref={emailRef}
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -70,7 +72,7 @@ export default function UserAuthenticate() {
                   />
                 </div>
                 <button
-                  className="bg-[#bcaeec] text-black h-10 rounded-full px-8s"
+                  className="bg-[#bcaeec] text-black h-10 rounded-full px-8 mt-4 cursor-pointer"
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -91,12 +93,12 @@ export default function UserAuthenticate() {
         </div>
       </div>
       <div className="relative hidden lg:block">
-        <img
+        <div
           // src="/placeholder.svg"
           // src="https://thumbs.dreamstime.com/b/d-sound-waves-icon-isolated-white-background-d-sound-waves-icon-isolated-white-background-370023306.jpg"
-          src="https://static.vecteezy.com/system/resources/thumbnails/009/269/022/small_2x/abstract-dynamic-colorful-flowing-lines-design-sound-wave-background-illustration-of-music-technology-concept-vector.jpg"
-          alt="Image"
-          className="absolute left-[50%] top-[50%] -translate-1/2 object-cover"
+          // src="https://static.vecteezy.com/system/resources/thumbnails/009/269/022/small_2x/abstract-dynamic-colorful-flowing-lines-design-sound-wave-background-illustration-of-music-technology-concept-vector.jpg"
+          // alt="Image"
+          className="absolute left-[50%] top-[50%] -translate-1/2 object-cover bg-gray-500 w-[60%] h-[60%]"
         />
       </div>
     </div>
