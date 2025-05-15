@@ -258,12 +258,12 @@ const HomePage = () => {
         </div>
       </section> */}
 
-      <section className="flex flex-col items-center mx-8 mt-4 overflow-hidden relative lg:hidden">
-        <h1 className="text-[2.5rem]/[2.75rem] text-center font-semibold">
+      <section className="flex flex-col items-center mx-8 mt-4 md:mt-6 overflow-hidden relative xl:hidden">
+        <h1 className="text-[2.5rem]/[2.75rem] text-center font-semibold md:text-6xl">
           <span className="text-[#070036]">Articulate your voice.</span>
           <span className="text-[#5d5c61]"> Empower your future.</span>
         </h1>
-        <p className="text-center mt-6 text-lg">
+        <p className="text-center mt-6 text-lg md:text-2xl">
           Enhance your speech, polish your resume, and conquer your next
           interview with Acento.ai.
         </p>
@@ -289,7 +289,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="lg:grid-cols-2 hidden lg:grid mt-8 py-16">
+      <section className="lg:grid-cols-2 hidden xl:grid mt-8 py-16">
         <div className="flex flex-col gap-4 p-6 md:p-16 justify-start items-center">
           <h1 className="text-6xl xl:text-7xl leading-none text-center font-semibold">
             <span className="text-[#070036]">Articulate your voice.</span>
@@ -297,9 +297,7 @@ const HomePage = () => {
           </h1>
           <p className="text-center mt-6 text-lg">
             Enhance your speech, polish your resume, and conquer your next
-            interview with Acento.ai. Enhance your speech, polish your resume,
-            and conquer your next interview with Acento.ai. Enhance your speech,
-            polish your resume, and conquer your next interview with Acento.ai.
+            interview with Acento.ai.
           </p>
           <div className="mt-16">
             <Link to={"/auth"}>
@@ -329,7 +327,7 @@ const HomePage = () => {
       </section>
 
       <section id="features" className="flex flex-col mx-8 my-20 lg:mx-16">
-        <div className="text-4xl font-regular font-heading text-[#5d5c61] mb-8 lg:text-right lg:text-5xl lg:font-semibold lg:max-w-[48rem] lg:ml-auto">
+        <div className="text-4xl font-medium font-heading text-[#5d5c61] mb-8 lg:text-right lg:text-5xl xl:text-6xl lg:font-semibold lg:max-w-[48rem] lg:ml-auto">
           <span className="text-[#070036]">Speak with clarity.</span>
           <span>
             {" "}
@@ -384,14 +382,14 @@ const HomePage = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="size-16 lg:size-20"
+                  class="size-16 lg:size-20 xl:size-24"
                 >
                   {card.icon}
                 </svg>
-                <h1 className="text-4xl mt-8 lg:text-5xl lg:mt-16">
+                <h1 className="text-4xl mt-8 lg:text-5xl lg:mt-16 xl:mt-32 xl:text-6xl">
                   {card.title}
                 </h1>
-                <p className="text-[#666] mt-4 lg:text-lg">
+                <p className="text-[#666] mt-4 lg:text-lg xl:text-xl">
                   {card.description}
                 </p>
               </div>
@@ -443,10 +441,10 @@ const HomePage = () => {
 
       <section id="faq" className="mx-8 my-20 gap-12 lg:mx-16 lg:flex">
         <div className="mb-12">
-          <h2 className="text-4xl font-regular text-[#070036] mb-4 lg:text-5xl lg:font-semibold">
+          <h2 className="text-4xl font-medium text-[#070036] mb-4 md:text-5xl lg:text-6xl lg:font-semibold">
             Popular Questions
           </h2>
-          <p className="text-[#666]">
+          <p className="text-[#666] md:text-xl lg:text-2">
             Not seeing your question here? Check out our Help Center for more
             detailed articles, or reach out to our support team at
             support@yourdomain.com. We're here to help you get the most out of
@@ -461,7 +459,9 @@ const HomePage = () => {
                 className="flex justify-between items-center cursor-pointer color-[#070036] text-xl"
                 onClick={() => toggleAccordion(index)}
               >
-                <span className="max-w-[90%]">{item.question}</span>
+                <span className="max-w-[90%] md:text-xl xl:text-2xl">
+                  {item.question}
+                </span>
                 <span
                   className={`transition ${
                     openIndex === index ? "-rotate-180" : ""
@@ -491,14 +491,14 @@ const HomePage = () => {
         className="flex flex-col items-center text-center mx-8 my-8 mb-8 px-4 py-8 lg:max-w-[60rem] lg:mx-auto rounded-4xl bg-center bg-cover
       bg-[url(/src/assets/cta-image.webp)]"
       >
-        <h3 className="text-4xl">Empower Your Career. </h3>
-        <p className="text-[#5d5c61] mt-4 mb-8 px-2">
+        <h3 className="text-4xl font-medium ">Empower Your Career. </h3>
+        <p className="text-[#5d5c61] mt-4 mb-8 px-2 text-xl">
           Refine your resume, master interview skills, and navigate cultural
           norms—our AI-driven platform guides you ever
         </p>
         <button
           type="button"
-          className="bg-[#bcaeec] color-white px-6 py-3 rounded-full"
+          className="bg-[#bcaeec] color-white px-6 py-3 rounded-full mt-16 md:mt-20 lg:mt-32 xl:mt-48"
         >
           Sign Up
         </button>

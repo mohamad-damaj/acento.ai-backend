@@ -76,7 +76,8 @@ export default function UserAuthenticate() {
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
-                    signIn(email, password);
+                    // signIn(email, password);
+                    signIn("test@gmail.com", "password");
                   }}
                 >
                   Login

@@ -221,7 +221,7 @@ function Dashboard() {
   // will make request to flask backend
 
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [chats, setChats] = useState(null);
+  const [chats, setChats] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [currentChatUid, setCurrentChatUid] = useState("");
   const { currentUser } = useAuth();
@@ -275,7 +275,7 @@ function Dashboard() {
     updateChats();
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (currentChatUid !== "") {
       getUserMessages(currentUser.uid, currentChatUid).then((data) => {
         console.log("Messages:", data);
@@ -284,22 +284,30 @@ function Dashboard() {
     } else {
       setCurrentChat(null);
     }
-  }, [currentChatUid, currentUser.uid]);
+  }, [currentChatUid, currentUser.uid]); */
+
+  const fetchLocalMessages = () => {
+    return localStorage.getItem("messages") ?? [];
+  };
+
+  useEffect(() => {
+    setChats(fetchLocalMessages());
+  }, []);
 
   const toggleSidebar = () => {
     setIsCollapsed((val) => !val);
   };
 
   return (
-    <>
-      <section className="w-screen py-6 px-8 flex items-center justify-left">
+    <div className="w-screen h-screen">
+      <section className="w-screen py-6 px-8 flex items-center justify-start">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="black"
-          className="size-6"
+          className="size-6 cursor-pointer"
           onClick={toggleSidebar}
         >
           <path
@@ -309,39 +317,120 @@ function Dashboard() {
           />
         </svg>
         <h1 className="text-xl ml-4 md:hidden">Chats</h1>
+        <a
+          className="ml-auto cursor-pointer"
+          onClick={() => {
+            signOut(auth);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="size-6 cursor-pointer"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+            />
+          </svg>
+        </a>
         <nav
           className={`bg-white fixed inset-0 right-[15%] max-w-[24rem] transition-all ${
             isCollapsed ? "translate-x-[-100%]" : ""
           }`}
         >
-          <div className="w-full py-6 px-8 flex items-center justify-left">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="black"
-              className="size-6"
-              onClick={toggleSidebar}
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
+          <div className="py-6 px-8 [&>*:not(:last-child)]:mb-4 h-full flex flex-col">
+            <div className="w-full flex items-center justify-left">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="black"
+                className="size-6 cursor-pointer"
+                onClick={toggleSidebar}
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+            <div className="bg-[#f3f3f7] px-8 py-4 rounded-2xl flex flex-col gap-3">
+              {[
+                {
+                  name: "New resume analysis",
+                  icon: (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  name: "New interview analysis",
+                  icon: (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"
+                      />
+                    </svg>
+                  ),
+                },
+              ].map((item, index) => {
+                return (
+                  <>
+                    {index !== 0 && (
+                      <hr className="h-px bg-gray-200 border-0 dark:bg-gray-300" />
+                    )}
+                    <a href="https://github.com" target="_blank">
+                      <div className="flex items-center justify-start gap-2">
+                        {item.icon}
+                        {item.name}
+                      </div>
+                    </a>
+                  </>
+                );
+              })}
+            </div>
+            <div className="bg-[#f3f3f7] px-8 py-8 rounded-2xl grow">
+              <p className="italic text-gray-400 text-center">
+                No items to show
+              </p>
+            </div>
           </div>
         </nav>
       </section>
-      {chats ? <div></div> : <p>Loading</p>}
-      <button
-        onClick={() => {
-          signOut(auth);
-        }}
-      >
-        Logout
-      </button>
-    </>
+      {chats.length !== 0 ? (
+        <div className="w-full h-full">asdasd</div>
+      ) : (
+        <p>Upload</p>
+      )}
+    </div>
   );
 
   return (
