@@ -51,7 +51,6 @@ def resume_feedback():
         pass
 
     response = make_response(jsonify(clean(feedback)))
-    response = make_response(jsonify(clean(feedback)))
     response.headers["Content-Type"] = "application/json"
     return response, 200
 
