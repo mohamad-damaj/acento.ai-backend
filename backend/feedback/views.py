@@ -1,7 +1,8 @@
 from flask import Flask, request, Blueprint, jsonify, make_response, render_template
-from ..model.feedback import Gemini
-from ..model.word_utils import wpm, clean
-from ..model.pdf_reader import read_pdf
+from backend.model.feedback import Gemini
+from backend.model.word_utils import wpm, clean
+from backend.model.pdf_reader import read_pdf
+
 import io
 from flask_cors import cross_origin
 import traceback

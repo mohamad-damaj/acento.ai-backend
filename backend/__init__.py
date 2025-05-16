@@ -9,16 +9,15 @@ app = Flask(__name__)
 
 cors.init_app(app, origins=["http://localhost:*"], methods=["GET", "POST"])
 
-from backend import feedback
-app.register_blueprint(feedback.bp, url_prefix="/feedback")
+from .feedback.views import bp
+app.register_blueprint(bp, url_prefix="/feedback")
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    app.run(host="0.0.0.0", port=port)
+port = int(os.environ.get("PORT", 8000))
+app.run(host="0.0.0.0", port=port)
 
 
