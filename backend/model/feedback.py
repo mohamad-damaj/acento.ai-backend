@@ -86,12 +86,15 @@ class Gemini:
         response = self.model.generate_content(input_index)
         return response.text
     
-    def query_gemini_resume_feedback(self, resume, job_description = None):
+    def query_gemini_resume_feedback(self, resume, job_description = None, context = None):
         
         input_index = f"""You are a ResumeChecker, an expert in optimizing resumes for recruitment. Prove a deep analysis of the following resume:
         
         Resume = {resume}
         Job Description (if applicable): {job_description}
+
+        The user has received the following previous feedback:
+        {context}
 
         Required Output:
         Your Strengths: List key strengths of the resume.
@@ -116,10 +119,6 @@ class Gemini:
     
 
 
-if __name__ == "__main__":
-    Gemini_model = Gemini()
-    print(Gemini_model.query_gemini_feedback("I uh um it is um nice to meet you", "formal", 150, """{"filler_words": "Okay, I noticed you used "uh" and "um" quite a bit. In a formal setting, these can make you sound a little less confident. Try to pause instead – it can give you time to think and make you sound more in control.", "WPM": "Your pace is at 150 words per minute, which is a pretty good speed. It's not too fast, so people should be able to follow you easily.", "grammar": "Your grammar is good! I don't see any errors that need fixing.", "word_choice": "The phrase "nice to meet you" is perfectly fine and appropriate for a formal introduction. Good job!", "comprehensibility": "The message is very simple and easy to understand. However, the filler words at the beginning ("I uh um it is um nice to meet you") might distract your listener in a formal setting.", "content_structure": "Since this is a short greeting, there isn't much structure to discuss. It's direct and to the point, which is good.", "overall_recommendation": "Focus on minimizing those filler words to boost your confidence. Overall, you're off to a good start!"}"""))
-                            
 
         
 
