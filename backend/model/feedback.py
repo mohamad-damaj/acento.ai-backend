@@ -1,6 +1,7 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+# from pdf_reader import read_pdf
 
 
 class Gemini:
@@ -10,7 +11,6 @@ class Gemini:
         load_dotenv(dotenv_path)
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
         self.model = genai.GenerativeModel("gemini-2.0-flash")
-
 
     def query_gemini_audio_feedback(self, audio_text, situation, wpm, context=None):
         input_index = f"""Role:
@@ -52,7 +52,6 @@ class Gemini:
 
         response = self.model.generate_content(input_index)
         return response.text
-    
 
     def query_gemini_vocal_feedback(self, audio_features, situation, context=None):
         input_index = f"""Role:
@@ -85,9 +84,9 @@ class Gemini:
         }}"""
         response = self.model.generate_content(input_index)
         return response.text
-    
-    def query_gemini_resume_feedback(self, resume, job_description = None, context = None):
-        
+
+    def query_gemini_resume_feedback(self, resume, job_description=None, context=None):
+
         input_index = f"""You are a ResumeChecker, an expert in optimizing resumes for recruitment. Prove a deep analysis of the following resume:
         
         Resume = {resume}
@@ -96,33 +95,60 @@ class Gemini:
         The user has received the following previous feedback:
         {context}
 
-        Required Output:
-        Your Strengths: List key strengths of the resume.
-        Improvements: Suggest specific improvements with specific appliable recommendations.
+        The required output is split into two portions. One is an evaluation section which requires scores for the reusme. Second is the extended and detailed feedback on the resume.
+
+        The evaluation requirements are as follows:
         Brevity: Rate the brevity of the writing out of 10
         Style: Rate the word style out of 10
         Strucuture: Rate the strucutre of the resume out of 10
         Skills: Rate the skills present in the resume out of 10
         ATS Compatibility: Give an ATS compatibility score out of 100 with respect to job description, if it is None, then do it with respect to a generic job in the field
-        ATS Improvements: Suggest specific improvements to increase ATS score.
-        IMPORTANT:
-        You must return your answer in EXACTLY the following format (no extra keys, text, or commentary):
+
+        The extended feedback requirements are as follows:
+        Your Strengths: List key strengths of the resume.
+        Improvements: Suggest specific improvements with specific appliable recommendations.
+
+        Reply in nicely formatted markdown, providing clear feedback on the resume.
+
+        """
+        # IMPORTANT:
+        # You must return your answer in EXACTLY the following format (no extra keys, text, or commentary):
+
+        # ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE:
+        # {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
+
+        response = self.model.generate_content(input_index)
+        return response.text
+
+    def query_gemini_resumeChat_feedback(self, resume, quest=None, job_description=None, context=None):
+
+        input_index = f"""You are a ResumeChecker, an expert in optimizing resumes for recruitment. Use the information below to answer the user's question.
         
-        ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE: 
-        {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
+        Resume = {resume}
+        Job Description (if applicable): {job_description}
+
+        This is the chat history:
+        {context}
+
+        Question asked by the user:
+        {quest}
+
+        Reply in nicely formatted markdown, clearly addressing the user's question.
 
         """
         response = self.model.generate_content(input_index)
         return response.text
 
 
-    
+# if __name__ == "__main__":
+#     model = Gemini()
+#     text = read_pdf(
+#         r"/home/moo/Documents/Aman Meherally - Customer Service Resume (Old).pdf")
 
+#     response = model.query_gemini_resumeChat_feedback(resume=text, context="""
+#     AI: This is a good resume, but the font is not standardized
+# """, quest="User: What is wrong with the font?")
 
+#     response.replace("\n", "<br/>")
 
-        
-
-
-
-
-    
+#     print(response)
