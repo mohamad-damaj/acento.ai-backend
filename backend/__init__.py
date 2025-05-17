@@ -6,8 +6,7 @@ from flask_cors import CORS, cross_origin
 cors = CORS()
 
 app = Flask(__name__)
-cors.init_app(app, origins=[
-              "http://localhost:*", "https://acento-ai.github.io/*"], methods=["GET", "POST"])
+cors.init_app(app, origins=["http://localhost:*", "https://acento-ai.github.io/*", "https://theamanm.github.io/*"], methods=["GET", "POST"])
 
 app.register_blueprint(bp, url_prefix="/feedback")
 
