@@ -1,6 +1,7 @@
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+from pdf_reader import read_pdf
 
 
 class Gemini:
@@ -115,6 +116,41 @@ class Gemini:
         response = self.model.generate_content(input_index)
         return response.text
 
+    def query_gemini_resumeChat_feedback(self, resume, quest= None, job_description = None, context = None):
+        
+        input_index = f"""You are a ResumeChecker, an expert in optimizing resumes for recruitment. Prove a deep analysis of the following resume:
+        
+        Resume = {resume}
+        Job Description (if applicable): {job_description}
+
+        The user has received the following previous feedback:
+        {context}
+
+        Required Output:
+        Your Strengths: List key strengths of the resume.
+        Improvements: Suggest specific improvements with specific appliable recommendations.
+        Brevity: Rate the brevity of the writing out of 10
+        Style: Rate the word style out of 10
+        Strucuture: Rate the strucutre of the resume out of 10
+        Skills: Rate the skills present in the resume out of 10
+        ATS Compatibility: Give an ATS compatibility score out of 100 with respect to job description, if it is None, then do it with respect to a generic job in the field
+        ATS Improvements: Suggest specific improvements to increase ATS score.
+    
+        IMPORTANT:
+        You must return your answer in EXACTLY the following format (no extra keys, text, or commentary):
+        
+        ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE: 
+        {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
+
+        """
+        response = self.model.generate_content(input_index)
+        return response.text
+    
+if __name__ == "__main__":
+    model = Gemini()
+    text = read_pdf(r"C:\Users\user\Desktop\Job Apps COPB52\SWE Resume Newer.pdf")
+
+    print(model.query_gemini_resumeChat_feedback(resume = text))
 
     
 
