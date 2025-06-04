@@ -1,4 +1,4 @@
-from flask import Flask, request, Blueprint, jsonify, make_response, render_template, Response
+from flask import Flask, request, Blueprint, jsonify, make_response, render_template, Response, stream_with_context
 from backend.model.feedback import Gemini
 from backend.model.word_utils import wpm, clean
 from backend.model.pdf_reader import read_pdf
@@ -50,7 +50,7 @@ def resume_feedback():
         except Exception as e:
             yield f"data: [ERROR] {str(e)}\n\n"
 
-    return Response(generate(), content_type="text/plain")
+    return Response(stream_with_context(generate(), content_type="text/plain"))
 
 
 @bp.route("/resumeChat", methods=["POST"])
