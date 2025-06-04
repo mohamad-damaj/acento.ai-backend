@@ -4,11 +4,13 @@ from backend.model.word_utils import wpm, clean
 from backend.model.pdf_reader import read_pdf
 
 import io
-from flask_cors import cross_origin
+from flask_cors import CORS, cross_origin
 import traceback
 import subprocess
 
 bp = Blueprint("feedback", __name__)
+CORS(bp, origins=["http://localhost:*", "https://acento-ai.github.io/*",
+                  "https://theamanm.github.io/*"])
 feedback_model = Gemini()
 
 
