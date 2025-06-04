@@ -138,8 +138,10 @@ class Gemini:
         Reply in nicely formatted markdown, clearly addressing the user's question.
 
         """
-        response = self.model.generate_content(input_index)
-        return response.text
+        response = self.model.generate_content(input_index, stream=True)
+        for chunk in response:
+            if chunk.text:
+                yield chunk.text
 
 
 # if __name__ == "__main__":

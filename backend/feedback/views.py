@@ -46,11 +46,11 @@ def resume_feedback():
     def generate():
         try:
             for chunk in feedback_model.query_gemini_resume_feedback(text, job, context=context):
-                yield f"data: {chunk}\n\n"
+                yield f"{chunk}"
         except Exception as e:
             yield f"data: [ERROR] {str(e)}\n\n"
 
-    return Response(generate(), content_type="text/event-stream")
+    return Response(generate(), content_type="text/plain")
 
 
 @bp.route("/resumeChat", methods=["POST"])
@@ -90,13 +90,13 @@ def resumeChat_feedback():
         response = make_response(jsonify("failed to generate features"))
         return response, 400
 
-    try:
-        feedback = feedback_model.query_gemini_resumeChat_feedback(
-            text, quest, job, context=context)
-        print(feedback)
-    except Exception as e:
-        response = make_response(jsonify("failed to generate feedback"))
-        return response, 400
-        pass
+    def generate():
+        try:
+            for chunk in feedback_model.query_gemini_resumeChat_feedback(
+                text, quest, job, context=context
+            ):
+                yield chunk
+        except Exception as e:
+            yield f"[ERROR] {str(e)}"
 
-    return jsonify({"feedback": feedback}), 200
+    return Response(generate(), content_type="text/plain")
