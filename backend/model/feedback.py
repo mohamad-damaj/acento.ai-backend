@@ -117,8 +117,10 @@ class Gemini:
         # ENSURE TO RETURN THE OUTPUT IN THE FOLLOWING DICTIONARY FORMAT RETURN JUST A STRING IN THAT SHAPE NOTHING MORE:
         # {{"Your Strengths":"<strengths information>", "Improvements": "<improvement information>", ...\}}
 
-        response = self.model.generate_content(input_index)
-        return response.text
+        response = self.model.generate_content(input_index, stream=True)
+        for chunk in response:
+            if chunk.text:
+                yield chunk.text
 
     def query_gemini_resumeChat_feedback(self, resume, quest=None, job_description=None, context=None):
 

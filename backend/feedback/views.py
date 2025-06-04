@@ -1,4 +1,4 @@
-from flask import Flask, request, Blueprint, jsonify, make_response, render_template
+from flask import Flask, request, Blueprint, jsonify, make_response, render_template, Response
 from backend.model.feedback import Gemini
 from backend.model.word_utils import wpm, clean
 from backend.model.pdf_reader import read_pdf
@@ -43,20 +43,14 @@ def resume_feedback():
         response = make_response(jsonify("failed to generate features"))
         return response, 400
 
-    try:
-        feedback = feedback_model.query_gemini_resume_feedback(
-            text, job, context=context)
-        print(feedback)
-    except Exception as e:
-        response = make_response(jsonify("failed to generate feedback"))
-        return response, 400
-        pass
+    def generate():
+        try:
+            for chunk in feedback_model.query_gemini_resume_feedback(text, job, context=context):
+                yield f"data: {chunk}\n\n"
+        except Exception as e:
+            yield f"data: [ERROR] {str(e)}\n\n"
 
-    # response = make_response(jsonify({feedback: feedback}))
-    # response.headers["Content-Type"] = "application/json"
-    # return response, 200
-
-    return jsonify({"feedback": feedback}), 200
+    return Response(generate(), content_type="text/event-stream")
 
 
 @bp.route("/resumeChat", methods=["POST"])
